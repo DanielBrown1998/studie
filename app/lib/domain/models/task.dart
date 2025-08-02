@@ -2,26 +2,26 @@
 import 'dart:convert';
 
 class Task {
-  final DateTime timeStart;
-  final DateTime timeEnd;
+  final int timeStart;
+  final int timeEnd;
   final String description;
   final String discipline;
   final bool checked;
-  final int uid;
+  final int? uid;
   final String daysWeek;
   Task({
-    DateTime? timeEnd,
+    int? timeEnd,
     required this.timeStart,
     required this.description,
     required this.discipline,
-    required this.checked,
-    required this.uid,
+    this.checked = false,
+    this.uid,
     required this.daysWeek,
-  }) : timeEnd = timeEnd ?? timeStart.add(Duration(minutes: 30));
+  }) : timeEnd = timeEnd ?? timeStart + 1;
 
   Task copyWith({
-    DateTime? timeStart,
-    DateTime? timeEnd,
+    int? timeStart,
+    int? timeEnd,
     String? description,
     String? discipline,
     bool? checked,
@@ -41,8 +41,8 @@ class Task {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'timeStart': timeStart.millisecondsSinceEpoch,
-      'timeEnd': timeEnd.millisecondsSinceEpoch,
+      'timeStart': timeStart,
+      'timeEnd': timeEnd,
       'description': description,
       'discipline': discipline,
       'checked': checked,
@@ -53,12 +53,12 @@ class Task {
 
   factory Task.fromMap(Map<String, dynamic> map) {
     return Task(
-      timeStart: DateTime.fromMillisecondsSinceEpoch(map['timeStart'] as int),
-      timeEnd: DateTime.fromMillisecondsSinceEpoch(map['timeEnd'] as int),
+      timeStart: map['timeStart'] as int,
+      timeEnd: map['timeEnd'] as int,
       description: map['description'] as String,
       discipline: map['discipline'] as String,
       checked: map['checked'] as bool,
-      uid: map['uid'] as int,
+      uid: map['uid'] != null ? map['uid'] as int : null,
       daysWeek: map['daysWeek'] as String,
     );
   }

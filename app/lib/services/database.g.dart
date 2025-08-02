@@ -58,10 +58,11 @@ class $TableTasksTable extends TableTasks
     aliasedName,
     false,
     type: DriftSqlType.bool,
-    requiredDuringInsert: true,
+    requiredDuringInsert: false,
     defaultConstraints: GeneratedColumn.constraintIsAlways(
       'CHECK ("checked" IN (0, 1))',
     ),
+    defaultValue: const Constant(false),
   );
   static const VerificationMeta _daysWeekMeta = const VerificationMeta(
     'daysWeek',
@@ -78,22 +79,22 @@ class $TableTasksTable extends TableTasks
     'timeStart',
   );
   @override
-  late final GeneratedColumn<DateTime> timeStart = GeneratedColumn<DateTime>(
+  late final GeneratedColumn<int> timeStart = GeneratedColumn<int>(
     'timeStart',
     aliasedName,
     false,
-    type: DriftSqlType.dateTime,
+    type: DriftSqlType.int,
     requiredDuringInsert: true,
   );
   static const VerificationMeta _timeEndMeta = const VerificationMeta(
     'timeEnd',
   );
   @override
-  late final GeneratedColumn<DateTime> timeEnd = GeneratedColumn<DateTime>(
+  late final GeneratedColumn<int> timeEnd = GeneratedColumn<int>(
     'timeEnd',
     aliasedName,
     false,
-    type: DriftSqlType.dateTime,
+    type: DriftSqlType.int,
     requiredDuringInsert: true,
   );
   @override
@@ -148,8 +149,6 @@ class $TableTasksTable extends TableTasks
         _checkedMeta,
         checked.isAcceptableOrUnknown(data['checked']!, _checkedMeta),
       );
-    } else if (isInserting) {
-      context.missing(_checkedMeta);
     }
     if (data.containsKey('daysWeek')) {
       context.handle(
@@ -211,12 +210,12 @@ class $TableTasksTable extends TableTasks
           )!,
       timeStart:
           attachedDatabase.typeMapping.read(
-            DriftSqlType.dateTime,
+            DriftSqlType.int,
             data['${effectivePrefix}timeStart'],
           )!,
       timeEnd:
           attachedDatabase.typeMapping.read(
-            DriftSqlType.dateTime,
+            DriftSqlType.int,
             data['${effectivePrefix}timeEnd'],
           )!,
     );
@@ -234,8 +233,8 @@ class TableTask extends DataClass implements Insertable<TableTask> {
   final String description;
   final bool checked;
   final String daysWeek;
-  final DateTime timeStart;
-  final DateTime timeEnd;
+  final int timeStart;
+  final int timeEnd;
   const TableTask({
     required this.uid,
     required this.discipline,
@@ -253,8 +252,8 @@ class TableTask extends DataClass implements Insertable<TableTask> {
     map['description'] = Variable<String>(description);
     map['checked'] = Variable<bool>(checked);
     map['daysWeek'] = Variable<String>(daysWeek);
-    map['timeStart'] = Variable<DateTime>(timeStart);
-    map['timeEnd'] = Variable<DateTime>(timeEnd);
+    map['timeStart'] = Variable<int>(timeStart);
+    map['timeEnd'] = Variable<int>(timeEnd);
     return map;
   }
 
@@ -281,8 +280,8 @@ class TableTask extends DataClass implements Insertable<TableTask> {
       description: serializer.fromJson<String>(json['description']),
       checked: serializer.fromJson<bool>(json['checked']),
       daysWeek: serializer.fromJson<String>(json['daysWeek']),
-      timeStart: serializer.fromJson<DateTime>(json['timeStart']),
-      timeEnd: serializer.fromJson<DateTime>(json['timeEnd']),
+      timeStart: serializer.fromJson<int>(json['timeStart']),
+      timeEnd: serializer.fromJson<int>(json['timeEnd']),
     );
   }
   @override
@@ -294,8 +293,8 @@ class TableTask extends DataClass implements Insertable<TableTask> {
       'description': serializer.toJson<String>(description),
       'checked': serializer.toJson<bool>(checked),
       'daysWeek': serializer.toJson<String>(daysWeek),
-      'timeStart': serializer.toJson<DateTime>(timeStart),
-      'timeEnd': serializer.toJson<DateTime>(timeEnd),
+      'timeStart': serializer.toJson<int>(timeStart),
+      'timeEnd': serializer.toJson<int>(timeEnd),
     };
   }
 
@@ -305,8 +304,8 @@ class TableTask extends DataClass implements Insertable<TableTask> {
     String? description,
     bool? checked,
     String? daysWeek,
-    DateTime? timeStart,
-    DateTime? timeEnd,
+    int? timeStart,
+    int? timeEnd,
   }) => TableTask(
     uid: uid ?? this.uid,
     discipline: discipline ?? this.discipline,
@@ -373,8 +372,8 @@ class TableTasksCompanion extends UpdateCompanion<TableTask> {
   final Value<String> description;
   final Value<bool> checked;
   final Value<String> daysWeek;
-  final Value<DateTime> timeStart;
-  final Value<DateTime> timeEnd;
+  final Value<int> timeStart;
+  final Value<int> timeEnd;
   const TableTasksCompanion({
     this.uid = const Value.absent(),
     this.discipline = const Value.absent(),
@@ -388,13 +387,12 @@ class TableTasksCompanion extends UpdateCompanion<TableTask> {
     this.uid = const Value.absent(),
     required String discipline,
     required String description,
-    required bool checked,
+    this.checked = const Value.absent(),
     required String daysWeek,
-    required DateTime timeStart,
-    required DateTime timeEnd,
+    required int timeStart,
+    required int timeEnd,
   }) : discipline = Value(discipline),
        description = Value(description),
-       checked = Value(checked),
        daysWeek = Value(daysWeek),
        timeStart = Value(timeStart),
        timeEnd = Value(timeEnd);
@@ -404,8 +402,8 @@ class TableTasksCompanion extends UpdateCompanion<TableTask> {
     Expression<String>? description,
     Expression<bool>? checked,
     Expression<String>? daysWeek,
-    Expression<DateTime>? timeStart,
-    Expression<DateTime>? timeEnd,
+    Expression<int>? timeStart,
+    Expression<int>? timeEnd,
   }) {
     return RawValuesInsertable({
       if (uid != null) 'uid': uid,
@@ -424,8 +422,8 @@ class TableTasksCompanion extends UpdateCompanion<TableTask> {
     Value<String>? description,
     Value<bool>? checked,
     Value<String>? daysWeek,
-    Value<DateTime>? timeStart,
-    Value<DateTime>? timeEnd,
+    Value<int>? timeStart,
+    Value<int>? timeEnd,
   }) {
     return TableTasksCompanion(
       uid: uid ?? this.uid,
@@ -457,10 +455,10 @@ class TableTasksCompanion extends UpdateCompanion<TableTask> {
       map['daysWeek'] = Variable<String>(daysWeek.value);
     }
     if (timeStart.present) {
-      map['timeStart'] = Variable<DateTime>(timeStart.value);
+      map['timeStart'] = Variable<int>(timeStart.value);
     }
     if (timeEnd.present) {
-      map['timeEnd'] = Variable<DateTime>(timeEnd.value);
+      map['timeEnd'] = Variable<int>(timeEnd.value);
     }
     return map;
   }
@@ -496,10 +494,10 @@ typedef $$TableTasksTableCreateCompanionBuilder =
       Value<int> uid,
       required String discipline,
       required String description,
-      required bool checked,
+      Value<bool> checked,
       required String daysWeek,
-      required DateTime timeStart,
-      required DateTime timeEnd,
+      required int timeStart,
+      required int timeEnd,
     });
 typedef $$TableTasksTableUpdateCompanionBuilder =
     TableTasksCompanion Function({
@@ -508,8 +506,8 @@ typedef $$TableTasksTableUpdateCompanionBuilder =
       Value<String> description,
       Value<bool> checked,
       Value<String> daysWeek,
-      Value<DateTime> timeStart,
-      Value<DateTime> timeEnd,
+      Value<int> timeStart,
+      Value<int> timeEnd,
     });
 
 class $$TableTasksTableFilterComposer
@@ -546,12 +544,12 @@ class $$TableTasksTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<DateTime> get timeStart => $composableBuilder(
+  ColumnFilters<int> get timeStart => $composableBuilder(
     column: $table.timeStart,
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<DateTime> get timeEnd => $composableBuilder(
+  ColumnFilters<int> get timeEnd => $composableBuilder(
     column: $table.timeEnd,
     builder: (column) => ColumnFilters(column),
   );
@@ -591,12 +589,12 @@ class $$TableTasksTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<DateTime> get timeStart => $composableBuilder(
+  ColumnOrderings<int> get timeStart => $composableBuilder(
     column: $table.timeStart,
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<DateTime> get timeEnd => $composableBuilder(
+  ColumnOrderings<int> get timeEnd => $composableBuilder(
     column: $table.timeEnd,
     builder: (column) => ColumnOrderings(column),
   );
@@ -630,10 +628,10 @@ class $$TableTasksTableAnnotationComposer
   GeneratedColumn<String> get daysWeek =>
       $composableBuilder(column: $table.daysWeek, builder: (column) => column);
 
-  GeneratedColumn<DateTime> get timeStart =>
+  GeneratedColumn<int> get timeStart =>
       $composableBuilder(column: $table.timeStart, builder: (column) => column);
 
-  GeneratedColumn<DateTime> get timeEnd =>
+  GeneratedColumn<int> get timeEnd =>
       $composableBuilder(column: $table.timeEnd, builder: (column) => column);
 }
 
@@ -673,8 +671,8 @@ class $$TableTasksTableTableManager
                 Value<String> description = const Value.absent(),
                 Value<bool> checked = const Value.absent(),
                 Value<String> daysWeek = const Value.absent(),
-                Value<DateTime> timeStart = const Value.absent(),
-                Value<DateTime> timeEnd = const Value.absent(),
+                Value<int> timeStart = const Value.absent(),
+                Value<int> timeEnd = const Value.absent(),
               }) => TableTasksCompanion(
                 uid: uid,
                 discipline: discipline,
@@ -689,10 +687,10 @@ class $$TableTasksTableTableManager
                 Value<int> uid = const Value.absent(),
                 required String discipline,
                 required String description,
-                required bool checked,
+                Value<bool> checked = const Value.absent(),
                 required String daysWeek,
-                required DateTime timeStart,
-                required DateTime timeEnd,
+                required int timeStart,
+                required int timeEnd,
               }) => TableTasksCompanion.insert(
                 uid: uid,
                 discipline: discipline,
