@@ -1,4 +1,4 @@
-enum AllDaysWeek {
+enum AllWeekDays {
   segundaFeira,
   tercaFeira,
   quartaFeira,
@@ -8,22 +8,22 @@ enum AllDaysWeek {
   domingo,
 }
 
-extension AllDaysWeekExtension on AllDaysWeek {
+extension AllWeekDaysExtension on AllWeekDays {
   String get nome {
     switch (this) {
-      case AllDaysWeek.segundaFeira:
+      case AllWeekDays.segundaFeira:
         return "Segunda-feira";
-      case AllDaysWeek.tercaFeira:
+      case AllWeekDays.tercaFeira:
         return "Terça-feira";
-      case AllDaysWeek.quartaFeira:
+      case AllWeekDays.quartaFeira:
         return "Quarta-feira";
-      case AllDaysWeek.quintaFeira:
+      case AllWeekDays.quintaFeira:
         return "Quinta-feira";
-      case AllDaysWeek.sextaFeira:
+      case AllWeekDays.sextaFeira:
         return "Sexta-feira";
-      case AllDaysWeek.sabado:
+      case AllWeekDays.sabado:
         return "Sábado";
-      case AllDaysWeek.domingo:
+      case AllWeekDays.domingo:
         return "Domingo";
     }
   }

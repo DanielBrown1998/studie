@@ -66,9 +66,11 @@ class AppDataBase extends _$AppDataBase implements DaoTasksWorkflow {
   }
 
   @override
-  Future<List<Task>> getTasksByDaysWeek({required String daysWeek}) async {
-    List<TableTask> rows = await select(tableTasks).get();
-    return rows.map((TableTask row) => _converterTableTaskInTask(row)).toList();
+  Future<List<Task>> getTasksByWeekDay({required String weekdays}) async {
+    final query = select(tableTasks)
+      ..where((tbl) => tbl.daysWeek.like('%$weekdays%'));
+    final tasksForDay = await query.get();
+    return tasksForDay.map(_converterTableTaskInTask).toList();
   }
 
   @override
