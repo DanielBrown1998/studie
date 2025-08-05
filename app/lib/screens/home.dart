@@ -89,6 +89,7 @@ class _HomePageState extends State<HomePage> {
                       child: MenuCard(
                         description: "Tarefas",
                         icon: Icons.task_alt,
+                        duration: 1,
                       ),
                     ),
                     AnimatedOpacity(
@@ -98,6 +99,7 @@ class _HomePageState extends State<HomePage> {
                       child: MenuCard(
                         description: "Config",
                         icon: Icons.settings,
+                        duration: 2,
                       ),
                     ),
                     AnimatedOpacity(
@@ -107,6 +109,7 @@ class _HomePageState extends State<HomePage> {
                       child: MenuCard(
                         description: "dicas",
                         icon: Icons.wb_incandescent_rounded,
+                        duration: 3,
                       ),
                     ),
                   ],
