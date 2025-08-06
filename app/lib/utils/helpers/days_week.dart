@@ -28,3 +28,24 @@ extension AllWeekDaysExtension on AllWeekDays {
     }
   }
 }
+
+AllWeekDays getWeekdayByNumber(int num) {
+  switch (num) {
+    case 1:
+      return AllWeekDays.segundaFeira;
+    case 2:
+      return AllWeekDays.tercaFeira;
+    case 3:
+      return AllWeekDays.quartaFeira;
+    case 4:
+      return AllWeekDays.quintaFeira;
+    case 5:
+      return AllWeekDays.sextaFeira;
+    case 6:
+      return AllWeekDays.sabado;
+    case 7:
+      return AllWeekDays.domingo;
+    default:
+      throw ArgumentError('Invalid weekday number: $num');
+  }
+}

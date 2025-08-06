@@ -8,16 +8,16 @@ class DefaultDialog {
     required String middleText,
     required String titleText,
   }) => Get.defaultDialog(
-        textConfirm: confirmText,
-        textCancel: cancelText,
-        backgroundColor: StudieTheme.whiteSmoke,
-        title: titleText,
-        titleStyle: StudieTheme.textTheme.bodyLarge,
-        middleText: middleText,
-        middleTextStyle: StudieTheme.textTheme.bodyMedium,
-        confirmTextColor: StudieTheme.primaryColor,
-        cancelTextColor: StudieTheme.secondaryColor,
-        onConfirm: () => Get.back(result: true),
-        onCancel: () {},
-      );
+    textConfirm: confirmText,
+    textCancel: cancelText,
+    backgroundColor: StudieTheme.whiteSmoke,
+    title: titleText,
+    titleStyle: StudieTheme.textTheme.bodyLarge,
+    middleText: middleText,
+    middleTextStyle: StudieTheme.textTheme.bodyMedium,
+    confirmTextColor: StudieTheme.whiteSmoke,
+    cancelTextColor: StudieTheme.secondaryColor,
+    onConfirm: () => Get.back(result: true),
+    onCancel: () {},
+  );
 }

@@ -1,3 +1,4 @@
+import 'package:app/utils/theme/theme.dart';
 import 'package:flutter/material.dart';
 
 class MenuCard extends StatefulWidget {
@@ -28,10 +29,22 @@ class _MenuCardState extends State<MenuCard> {
       child: Text(widget.description, style: theme.textTheme.bodyLarge),
       builder: (context, size, child) {
         return Card(
+          shape: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: BorderSide(
+              width: 8,
+              color: StudieTheme.primaryColor,
+              style: BorderStyle.solid,
+            ),
+          ),
+          color: StudieTheme.whiteSmoke,
+          clipBehavior: Clip.hardEdge,
           shadowColor: theme.primaryColor,
           elevation: 10,
           child: Material(
+            borderRadius: BorderRadius.all(Radius.circular(12)),
             child: InkWell(
+              splashColor: StudieTheme.secondaryColor,
               onTap: () => widget.function(),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,

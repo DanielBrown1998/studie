@@ -92,7 +92,7 @@ class _HomePageState extends State<HomePage> {
                           Get.to(
                             TasksScreen(),
                             curve: Curves.easeInOut,
-                            duration: Duration(seconds: 1),
+                            duration: Duration(milliseconds: 500),
                             transition: Transition.downToUp,
                           );
                         },
@@ -102,25 +102,47 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     AnimatedOpacity(
-                      duration: Duration(seconds: 2),
+                      duration: Duration(seconds: 1),
                       opacity: _op,
                       curve: Curves.easeInCubic,
                       child: MenuCard(
                         function: () {},
                         description: "Config",
                         icon: Icons.settings,
-                        duration: 2,
+                        duration: 1,
                       ),
                     ),
                     AnimatedOpacity(
                       opacity: _op,
-                      duration: Duration(seconds: 3),
+                      duration: Duration(milliseconds: 1500),
                       curve: Curves.easeInCubic,
                       child: MenuCard(
                         function: () {},
                         description: "dicas",
                         icon: Icons.wb_incandescent_rounded,
-                        duration: 3,
+                        duration: 1,
+                      ),
+                    ),
+                    AnimatedOpacity(
+                      opacity: _op,
+                      duration: Duration(milliseconds: 1750),
+                      curve: Curves.easeInCubic,
+                      child: MenuCard(
+                        function: () {},
+                        description: "login",
+                        icon: Icons.login,
+                        duration: 1,
+                      ),
+                    ),
+                    AnimatedOpacity(
+                      opacity: _op,
+                      duration: Duration(milliseconds: 1750),
+                      curve: Curves.easeInCubic,
+                      child: MenuCard(
+                        function: () {},
+                        description: "Pomodoro",
+                        icon: Icons.apple,
+                        duration: 1,
                       ),
                     ),
                   ],

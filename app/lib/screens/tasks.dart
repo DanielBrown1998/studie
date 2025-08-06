@@ -1,20 +1,33 @@
+import 'package:app/controllers/controller_taks.dart';
 import 'package:app/domain/models/task.dart';
 import 'package:app/screens/widgets/default_dialog.dart';
-import 'package:app/screens/widgets/task_card.dart';
 import 'package:app/utils/helpers/days_week.dart';
 import 'package:app/utils/theme/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-class TasksScreen extends StatelessWidget {
-  TasksScreen({super.key});
+class TasksScreen extends StatefulWidget {
+  const TasksScreen({super.key});
 
-  //TODO cut this when controllerTask is implemented
-  final Task task = Task(
-    timeStart: 8,
-    description: "contruindo a task screen",
-    discipline: "Flutter",
-    daysWeek: AllWeekDays.quartaFeira.nome,
-  );
+  @override
+  State<TasksScreen> createState() => _TasksScreenState();
+}
+
+class _TasksScreenState extends State<TasksScreen> {
+  late int weekdayByDateTime;
+  late AllWeekDays weekday;
+  ControllerTask? controller;
+  @override
+  void initState() {
+    super.initState();
+    weekdayByDateTime = DateTime.now().weekday;
+    weekday = getWeekdayByNumber(weekdayByDateTime);
+    controller = Get.find<ControllerTask>(tag: weekday.nome);
+    print(controller!.name.value);
+    for (Task item in controller!.tasks) {
+      print(item);
+    }
+  }
 
   deleteDataInCloud() async {
     final bool? confirm = await DefaultDialog.dialog(
@@ -27,13 +40,14 @@ class TasksScreen extends StatelessWidget {
       // TODO implements a function to remove firebase data
     }
   }
+
   syncDataInCloud() async {}
+
   saveDataInCLoud() async {}
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final media = MediaQuery.of(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: StudieTheme.primaryColor,
@@ -98,48 +112,8 @@ class TasksScreen extends StatelessWidget {
         ],
       ),
       body: Container(
+        height: double.maxFinite,
         decoration: BoxDecoration(color: StudieTheme.primaryColor),
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          spacing: 10,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              AllWeekDays.quartaFeira.nome,
-              style: theme.textTheme.titleLarge,
-            ),
-            Center(
-              child: Card(
-                shape: OutlineInputBorder(
-                  gapPadding: 4,
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(16),
-                    topRight: Radius.circular(16),
-                  ),
-                ),
-                elevation: 32,
-                shadowColor: StudieTheme.whiteSmoke,
-                color: StudieTheme.whiteColor,
-                child: SizedBox(
-                  height: media.size.height * 0.55,
-                  width: media.size.width * .75,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    //TODO replace this when controllerTask was implemented
-                    child: ListView.builder(
-                      padding: EdgeInsets.only(left: 8, right: 8),
-                      itemCount: 14,
-                      itemBuilder: (context, index) {
-                        return TaskCard(task: task);
-                      },
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }
