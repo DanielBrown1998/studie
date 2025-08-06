@@ -4,7 +4,14 @@ class MenuCard extends StatefulWidget {
   final String description;
   final IconData icon;
   final int duration;
-  const MenuCard({super.key, required this.description, required this.icon, required this.duration});
+  final Function function;
+  const MenuCard({
+    super.key,
+    required this.description,
+    required this.icon,
+    required this.duration,
+    required this.function,
+  });
 
   @override
   State<MenuCard> createState() => _MenuCardState();
@@ -23,10 +30,15 @@ class _MenuCardState extends State<MenuCard> {
         return Card(
           shadowColor: theme.primaryColor,
           elevation: 10,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [Icon(widget.icon, size: size), child!],
+          child: Material(
+            child: InkWell(
+              onTap: () => widget.function(),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [Icon(widget.icon, size: size), child!],
+              ),
+            ),
           ),
         );
       },

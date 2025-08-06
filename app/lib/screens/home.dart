@@ -1,4 +1,5 @@
 import 'package:app/controllers/controller_taks.dart';
+import 'package:app/screens/tasks.dart';
 import 'package:app/screens/widgets/app_bar.dart';
 import 'package:app/screens/widgets/menu_card.dart';
 import 'package:app/services/database.dart';
@@ -87,6 +88,14 @@ class _HomePageState extends State<HomePage> {
                       duration: Duration(seconds: 1),
                       curve: Curves.easeInCubic,
                       child: MenuCard(
+                        function: () {
+                          Get.to(
+                            TasksScreen(),
+                            curve: Curves.easeInOut,
+                            duration: Duration(seconds: 1),
+                            transition: Transition.downToUp,
+                          );
+                        },
                         description: "Tarefas",
                         icon: Icons.task_alt,
                         duration: 1,
@@ -97,6 +106,7 @@ class _HomePageState extends State<HomePage> {
                       opacity: _op,
                       curve: Curves.easeInCubic,
                       child: MenuCard(
+                        function: () {},
                         description: "Config",
                         icon: Icons.settings,
                         duration: 2,
@@ -107,6 +117,7 @@ class _HomePageState extends State<HomePage> {
                       duration: Duration(seconds: 3),
                       curve: Curves.easeInCubic,
                       child: MenuCard(
+                        function: () {},
                         description: "dicas",
                         icon: Icons.wb_incandescent_rounded,
                         duration: 3,
