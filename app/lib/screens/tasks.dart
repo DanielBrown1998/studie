@@ -1,10 +1,12 @@
 import 'package:app/controllers/controller_taks.dart';
 import 'package:app/domain/models/task.dart';
-import 'package:app/screens/widgets/default_dialog.dart';
-import 'package:app/utils/helpers/days_week.dart';
-import 'package:app/utils/theme/theme.dart';
+import 'package:app/screens/components/default_dialog.dart';
+import 'package:app/core/utils/helpers/days_week.dart';
+import 'package:app/core/theme/theme.dart';
+import 'package:app/screens/components/task_card.dart';
+import 'package:app/screens/components/tasks_to_dos.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class TasksScreen extends StatefulWidget {
   const TasksScreen({super.key});
@@ -15,18 +17,107 @@ class TasksScreen extends StatefulWidget {
 
 class _TasksScreenState extends State<TasksScreen> {
   late int weekdayByDateTime;
-  late AllWeekDays weekday;
+  AllWeekDays? weekday;
   ControllerTask? controller;
+  List<Widget> toDos = [
+    Center(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Center(
+              child: Icon(Icons.arrow_drop_up, color: StudieTheme.whiteSmoke),
+            ),
+            Card(
+              shape: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(18),
+                borderSide: BorderSide(
+                  width: 2,
+                  color: StudieTheme.secondaryColor,
+                ),
+              ),
+              elevation: 20,
+              shadowColor: StudieTheme.secondaryColor,
+              margin: EdgeInsets.only(bottom: 16, top: 16),
+              color: StudieTheme.terciaryColor,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  spacing: 10,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: TaskCard(
+                        task: Task(
+                          timeStart: 00,
+                          description: "aqui ficara a descricao da sua tarefa",
+                          discipline: "titulo",
+                          daysWeek: AllWeekDays.domingo.nome,
+                        ),
+                      ),
+                    ),
+                    Wrap(
+                      spacing: 10,
+                      direction: Axis.vertical,
+                      alignment: WrapAlignment.spaceBetween,
+                      children: [
+                        Chip(
+                          label: Text(
+                            "suas tarefas estao armazenadas aqui!",
+                            style: StudieTheme.textTheme.displaySmall,
+                          ),
+                        ),
+                        Chip(
+                          label: Text("pressione para marcar como concluido"),
+                          labelStyle: StudieTheme.textTheme.displaySmall,
+                        ),
+                        Chip(
+                          label: Text(
+                            "aperte para ver a descricao",
+                            style: StudieTheme.textTheme.displaySmall,
+                          ),
+                        ),
+                        Chip(
+                          label: Text(
+                            "arraste para a direita para deletar",
+                            style: StudieTheme.textTheme.displaySmall,
+                          ),
+                        ),
+                        Chip(
+                          label: Text(
+                            "utilize o exemplo para testes",
+                            style: StudieTheme.textTheme.displaySmall,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Center(
+              child: Icon(Icons.arrow_drop_down, color: StudieTheme.whiteSmoke),
+            ),
+          ],
+        ),
+      ),
+    ),
+  ];
+
   @override
   void initState() {
     super.initState();
     weekdayByDateTime = DateTime.now().weekday;
-    weekday = getWeekdayByNumber(weekdayByDateTime);
-    controller = Get.find<ControllerTask>(tag: weekday.nome);
-    print(controller!.name.value);
-    for (Task item in controller!.tasks) {
-      print(item);
+    for (int i = 1; i <= 7; i++) {
+      weekday = getWeekdayByNumber(i);
+      toDos.add(TasksToDos(weekDays: weekday!, index: i));
     }
+    weekday = getWeekdayByNumber(weekdayByDateTime);
   }
 
   deleteDataInCloud() async {
@@ -48,6 +139,7 @@ class _TasksScreenState extends State<TasksScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final media = MediaQuery.of(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: StudieTheme.primaryColor,
@@ -111,9 +203,45 @@ class _TasksScreenState extends State<TasksScreen> {
           ),
         ],
       ),
-      body: Container(
-        height: double.maxFinite,
-        decoration: BoxDecoration(color: StudieTheme.primaryColor),
+      body: Stack(
+        children: [
+          Container(
+            height: double.maxFinite,
+            decoration: BoxDecoration(color: StudieTheme.primaryColor),
+          ),
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              (weekday != null)
+                  ? Text(weekday!.nome, style: theme.textTheme.titleMedium)
+                  : Text("Orientacoes", style: theme.textTheme.titleMedium),
+              Center(
+                child: CarouselSlider(
+                  items: toDos,
+                  options: CarouselOptions(
+                    autoPlay: false,
+                    reverse: true,
+                    viewportFraction: 1,
+                    onPageChanged: (index, reason) {
+                      setState(() {
+                        if (index != 0) {
+                          weekday = getWeekdayByNumber(index);
+                        } else {
+                          weekday = null;
+                        }
+                      });
+                    },
+                    height: media.size.height * .7,
+                    disableCenter: false,
+                    aspectRatio: media.size.width / media.size.height,
+                    initialPage: weekdayByDateTime,
+                    scrollDirection: Axis.vertical,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }

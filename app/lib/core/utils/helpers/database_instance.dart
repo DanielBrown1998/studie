@@ -1,4 +1,4 @@
-import 'package:app/services/database.dart';
+import 'package:app/source/database/database.dart';
 
 class DatabaseInstance {
   AppDataBase? database;

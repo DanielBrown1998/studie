@@ -1,4 +1,4 @@
-import 'package:app/utils/theme/theme.dart';
+import 'package:app/core/theme/theme.dart';
 import 'package:flutter/material.dart';
 
 class StudieAppBar {

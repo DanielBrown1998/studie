@@ -1,11 +1,11 @@
 import 'package:app/controllers/controller_taks.dart';
 import 'package:app/screens/tasks.dart';
-import 'package:app/screens/widgets/app_bar.dart';
-import 'package:app/screens/widgets/menu_card.dart';
-import 'package:app/services/database.dart';
-import 'package:app/utils/helpers/database_instance.dart';
-import 'package:app/utils/helpers/days_week.dart';
-import 'package:app/utils/theme/theme.dart';
+import 'package:app/screens/components/app_bar.dart';
+import 'package:app/screens/components/menu_card.dart';
+import 'package:app/source/database/database.dart';
+import 'package:app/core/utils/helpers/database_instance.dart';
+import 'package:app/core/utils/helpers/days_week.dart';
+import 'package:app/core/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

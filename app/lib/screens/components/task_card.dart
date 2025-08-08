@@ -1,5 +1,5 @@
 import 'package:app/domain/models/task.dart';
-import 'package:app/utils/theme/theme.dart';
+import 'package:app/core/theme/theme.dart';
 import 'package:flutter/material.dart';
 
 class TaskCard extends StatelessWidget {
@@ -26,11 +26,14 @@ class TaskCard extends StatelessWidget {
       key: Key(task.uid.toString()),
       child: Center(
         child: Material(
+          color: Colors.transparent,
           child: Card(
             shadowColor: theme.primaryColor,
-            elevation: 10,
             shape: OutlineInputBorder(
-              borderSide: BorderSide(width: 2),
+              borderSide: BorderSide(
+                width: 2,
+                color: StudieTheme.secondaryColor,
+              ),
               borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(18),
                 topRight: Radius.circular(18),

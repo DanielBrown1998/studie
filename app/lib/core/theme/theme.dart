@@ -25,9 +25,29 @@ class StudieTheme {
       fontSize: 16,
       fontWeight: FontWeight.w400,
     ),
+    displayLarge: TextStyle(
+      fontFamily: "Libertinus_discursive",
+      fontSize: 28,
+      fontWeight: FontWeight.w500,
+    ),
+    displayMedium: TextStyle(
+      fontFamily: "Libertinus_discursive",
+      fontSize: 22,
+      fontWeight: FontWeight.w400,
+    ),
+    displaySmall: TextStyle(
+      fontFamily: "Libertinus_discursive",
+      fontSize: 16,
+      fontWeight: FontWeight.w300,
+    ),
+    titleSmall: TextStyle(
+      color: whiteSmoke,
+      fontSize: 19,
+      fontWeight: FontWeight.w400,
+    ),
     titleMedium: TextStyle(
       color: whiteSmoke,
-      fontSize: 26,
+      fontSize: 25,
       fontWeight: FontWeight.w500,
     ),
     titleLarge: TextStyle(

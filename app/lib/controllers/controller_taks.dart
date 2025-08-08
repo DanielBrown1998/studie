@@ -1,7 +1,7 @@
 import 'package:app/domain/business/dao_tasks_workflow.dart';
 import 'package:app/domain/models/task.dart';
 import 'package:get/get.dart';
-import 'package:app/services/database.dart' as package_database;
+import 'package:app/source/database/database.dart' as package_database;
 
 class ControllerTask extends GetxController implements DaoTasksWorkflow {
   final package_database.AppDataBase database;
