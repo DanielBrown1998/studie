@@ -84,7 +84,7 @@ class _TasksScreenState extends State<TasksScreen> {
                         ),
                         Chip(
                           label: Text(
-                            "arraste para a direita para deletar",
+                            "arraste para a esquerda para deletar",
                             style: StudieTheme.textTheme.displaySmall,
                           ),
                         ),
