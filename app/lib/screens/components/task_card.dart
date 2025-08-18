@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 class TaskCard extends StatefulWidget {
   final Task task;
   double? width;
+  bool flagShowDescription = false;
+  Color borderColorCard = StudieTheme.primaryColor;
   TaskCard({super.key, required this.task, this.width});
 
   @override
@@ -24,97 +26,134 @@ class _TaskCardState extends State<TaskCard> {
     final theme = Theme.of(context);
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Dismissible(
-        direction: DismissDirection.endToStart,
-        onDismissed: (direction) {},
-        background: Container(
-          color: Colors.red,
-          child: const Padding(
-            padding: EdgeInsets.only(right: 16.0),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [Icon(Icons.delete)],
-            ),
-          ),
-        ),
-        key: Key(widget.task.uid.toString()),
-        child: TweenAnimationBuilder(
-          duration: Duration(milliseconds: 350),
-          tween: Tween<double>(begin: 1, end: widget.width),
-          curve: Curves.bounceOut,
-          onEnd: () {
-            setState(() {
-              widget.width = 1;
-            });
-          },
-          builder:
-              (context, value, child) => Center(
-                child: Material(
-                  color: Colors.transparent,
+      child: TweenAnimationBuilder(
+        duration: Duration(milliseconds: 350),
+        tween: Tween<double>(begin: 1, end: widget.width),
+        curve: Curves.linearToEaseOut,
+        onEnd: () {},
+        builder:
+            (context, value, child) => Center(
+              child: AnimatedSize(
+                duration: Duration(milliseconds: 450),
+                curve: Curves.linear,
+                onEnd: () {
+                  setState(() {
+                    widget.width = 1;
+                    if (widget.borderColorCard != StudieTheme.primaryColor) {
+                      widget.borderColorCard = StudieTheme.primaryColor;
+                    } else {
+                      widget.borderColorCard = StudieTheme.secondaryColor;
+                    }
+                  });
+                },
+                reverseDuration: Duration(milliseconds: 300),
+                child: Card(
+                  shadowColor: theme.primaryColor,
                   shape: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      width: (3 + (widget.width ?? 0.0)) * (2 - widget.width!),
+                      color: widget.borderColorCard,
+                    ),
                     borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(18),
-                      topRight: Radius.circular(18),
+                      bottomLeft: Radius.circular(14),
+                      topRight: Radius.circular(14),
                     ),
                   ),
-                  child: Card(
-                    shadowColor: theme.primaryColor,
+                  child: Material(
+                    color: Colors.transparent,
                     shape: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        width: 4 * (2 - widget.width!),
-                        color: StudieTheme.secondaryColor,
-                      ),
                       borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(14),
-                        topRight: Radius.circular(14),
+                        bottomLeft: Radius.circular(18),
+                        topRight: Radius.circular(18),
                       ),
                     ),
                     child: child,
                   ),
                 ),
               ),
-          child: InkWell(
-            borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(14),
-              topRight: Radius.circular(14),
             ),
-            onTap: () {
-              //check is here
-            },
-            onLongPress: () {
-              setState(() {
-                widget.width = 0;
-              });
-              //update is here
-            },
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Text(
-                    widget.task.timeStart.toString(),
-                    style: theme.textTheme.bodyMedium,
-                  ),
-                  Text(
-                    widget.task.discipline,
-                    style: theme.textTheme.bodyMedium,
-                  ),
-                  Checkbox(
-                    value: widget.task.checked,
-                    onChanged: (value) {},
-                    shape: CircleBorder(
-                      side: BorderSide(
-                        width: 2,
-                        color: StudieTheme.secondaryColor,
+        child: InkWell(
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(14),
+            topRight: Radius.circular(14),
+          ),
+          onTap: () {
+            //check is here
+            widget.task.checked = !widget.task.checked;
+            setState(() {});
+          },
+          onLongPress: () {
+            widget.flagShowDescription = !widget.flagShowDescription;
+            setState(() {
+              widget.width = 0;
+            });
+          },
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+            child: Column(
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Text(
+                      widget.task.timeStart.toString(),
+                      style: theme.textTheme.bodyMedium,
+                    ),
+                    Text(
+                      widget.task.discipline,
+                      style: theme.textTheme.bodyMedium,
+                    ),
+                    Checkbox(
+                      value: widget.task.checked,
+                      onChanged: (value) {},
+                      shape: CircleBorder(
+                        side: BorderSide(
+                          width: 2,
+                          color: StudieTheme.secondaryColor,
+                        ),
                       ),
                     ),
+                  ],
+                ),
+                Visibility(
+                  visible: widget.flagShowDescription,
+                  child: Column(
+                    children: [
+                      Text(
+                        widget.task.description,
+                        style: theme.textTheme.bodyMedium,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          IconButton(
+                            onPressed: () {
+                              //here update data in task
+                            },
+                            icon: Icon(Icons.refresh),
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              //here delete from database
+                            },
+                            icon: Icon(Icons.delete),
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              //here go a pomodoro
+                            },
+                            icon: Icon(Icons.access_alarm),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),

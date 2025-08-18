@@ -139,14 +139,14 @@ class _TasksScreenState extends State<TasksScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final media = MediaQuery.of(context);
+    final size = MediaQuery.sizeOf(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: StudieTheme.primaryColor,
         centerTitle: true,
         foregroundColor: StudieTheme.primaryColor,
         surfaceTintColor: StudieTheme.primaryColor,
-        elevation: 0,
+        elevation: 10,
         automaticallyImplyLeading: false,
         leading: null,
         title: Text("Tarefas", style: theme.textTheme.titleLarge),
@@ -205,12 +205,21 @@ class _TasksScreenState extends State<TasksScreen> {
       ),
       body: Stack(
         children: [
-          Container(
+          // Container(
+          //   height: double.maxFinite,
+          //   decoration: BoxDecoration(color: StudieTheme.primaryColor),
+          // ),
+          SizedBox(
             height: double.maxFinite,
-            decoration: BoxDecoration(color: StudieTheme.primaryColor),
+            width: double.maxFinite,
+            child: Image.asset(
+              "assets/images/background.jpg",
+              fit: BoxFit.cover,
+            ),
           ),
           Column(
-            mainAxisSize: MainAxisSize.min,
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               (weekday != null)
                   ? Text(weekday!.nome, style: theme.textTheme.titleMedium)
@@ -220,7 +229,7 @@ class _TasksScreenState extends State<TasksScreen> {
                   items: toDos,
                   options: CarouselOptions(
                     autoPlay: false,
-                    reverse: true,
+                    // reverse: true,
                     viewportFraction: 1,
                     onPageChanged: (index, reason) {
                       setState(() {
@@ -231,11 +240,11 @@ class _TasksScreenState extends State<TasksScreen> {
                         }
                       });
                     },
-                    height: media.size.height * .7,
+                    height: size.height * .8,
                     disableCenter: false,
-                    aspectRatio: media.size.width / media.size.height,
+                    aspectRatio: 1 / (size.width / size.height),
                     initialPage: weekdayByDateTime,
-                    scrollDirection: Axis.vertical,
+                    scrollDirection: Axis.horizontal,
                   ),
                 ),
               ),

@@ -6,7 +6,7 @@ class Task {
   final int timeEnd;
   final String description;
   final String discipline;
-  final bool checked;
+  bool checked;
   final int? uid;
   final String daysWeek;
   Task({

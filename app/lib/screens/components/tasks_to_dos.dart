@@ -15,42 +15,54 @@ class TasksToDos extends StatelessWidget {
   Widget build(BuildContext context) {
     // final theme = Theme.of(context);
     final tasks = Get.find<ControllerTask>(tag: weekDays.nome);
-    final media = MediaQuery.of(context);
-    return Column(
+    final size = MediaQuery.sizeOf(context);
+    return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisSize: MainAxisSize.min,
+      mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        Center(child: Icon(Icons.arrow_drop_up, color: StudieTheme.whiteSmoke)),
-        Card(
-          shape: OutlineInputBorder(
-            gapPadding: 4,
-            borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(16),
-              topRight: Radius.circular(16),
+        Center(
+          child: Icon(Icons.arrow_back_ios_new, color: StudieTheme.whiteSmoke),
+        ),
+        // SizedBox(
+        //   height: double.maxFinite,
+        //   width: double.maxFinite,
+        //   child: Image.asset("assets/images/background.jpg"),
+        // ),
+        Flexible(
+          child: Card(
+            shape: OutlineInputBorder(
+              gapPadding: 4,
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(16),
+                topRight: Radius.circular(16),
+              ),
+              borderSide: BorderSide(
+                color: StudieTheme.primaryColor,
+                width: 2,
+              ),
             ),
-            borderSide: BorderSide(color: StudieTheme.secondaryColor, width: 8),
-          ),
-          shadowColor: StudieTheme.secondaryColor,
-          color: StudieTheme.primaryColor,
-          elevation: 12,
-          child: SizedBox(
-            height: media.size.height * 0.55,
-            width: media.size.width * .75,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ListView.builder(
-                padding: EdgeInsets.only(left: 8, right: 8),
-                itemCount: tasks.tasks.length,
-                itemBuilder: (context, index) {
-                  return TaskCard(task: tasks.tasks[index]);
-                },
+            shadowColor: StudieTheme.secondaryColor,
+            color: Colors.transparent,
+            elevation: 12,
+            child: SizedBox(
+              height: size.height * 0.6,
+              width: size.width * .8,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ListView.builder(
+                  padding: EdgeInsets.only(left: 8, right: 8),
+                  itemCount: tasks.tasks.length,
+                  itemBuilder: (context, index) {
+                    return TaskCard(task: tasks.tasks[index]);
+                  },
+                ),
               ),
             ),
           ),
         ),
         Center(
-          child: Icon(Icons.arrow_drop_down, color: StudieTheme.whiteSmoke),
+          child: Icon(Icons.arrow_forward_ios, color: StudieTheme.whiteSmoke),
         ),
       ],
     );
