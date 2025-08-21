@@ -19,33 +19,54 @@ class MenuCard extends StatefulWidget {
 }
 
 class _MenuCardState extends State<MenuCard> {
+  late double tweenSize;
+
+  @override
+  void initState() {
+    super.initState();
+    tweenSize = 10;
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    tweenSize = 50;
     return TweenAnimationBuilder<double>(
-      duration: Duration(seconds: widget.duration + 2),
-      curve: Curves.elasticOut,
-      tween: Tween<double>(begin: 0.0, end: 40.0),
+      duration: Duration(seconds: widget.duration + 1),
+      curve: Curves.easeInCubic,
+      tween: Tween<double>(begin: 0.0, end: tweenSize),
       child: Text(widget.description, style: theme.textTheme.bodyLarge),
       builder: (context, size, child) {
         return Card(
           shape: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
             borderSide: BorderSide(
-              width: 8,
-              color: StudieTheme.primaryColor,
+              width: 2,
+              color: StudieTheme.secondaryColor,
               style: BorderStyle.solid,
             ),
           ),
-          color: StudieTheme.whiteSmoke,
+          // color: StudieTheme.whiteSmoke,
           clipBehavior: Clip.hardEdge,
           shadowColor: theme.primaryColor,
           elevation: 10,
-          child: Material(
-            borderRadius: BorderRadius.all(Radius.circular(12)),
-            child: InkWell(
-              splashColor: StudieTheme.secondaryColor,
-              onTap: () => widget.function(),
+          child: InkWell(
+            splashColor: StudieTheme.secondaryColor,
+            onTap: () => widget.function(),
+            child: Ink(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(12)),
+                gradient: LinearGradient(
+                  begin: AlignmentGeometry.topLeft,
+                  end: AlignmentGeometry.bottomRight,
+                  colors: [
+                    StudieTheme.whiteSmoke,
+                    StudieTheme.terciaryColor,
+                    StudieTheme.secondaryColor,
+                    StudieTheme.primaryColor,
+                  ],
+                ),
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,

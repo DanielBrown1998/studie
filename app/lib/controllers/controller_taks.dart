@@ -17,11 +17,14 @@ class ControllerTask extends GetxController implements DaoTasksWorkflow {
 
   @override
   Future<int> createTask({required Task task}) {
-    return database.createTask(task: task);
+    final result = database.createTask(task: task);
+    tasks.add(task);
+    return result;
   }
 
   @override
   Future<int> deleteTask({required Task task}) {
+    tasks.remove(task);
     return database.deleteTask(task: task);
   }
 
@@ -31,14 +34,12 @@ class ControllerTask extends GetxController implements DaoTasksWorkflow {
   }
 
   @override
-  Future<bool> setTaskChecked({required Task task}) {
-    // TODO: implement setTaskChecked
-    throw UnimplementedError();
+  Future<bool> setTaskChecked({required Task task}) async {
+    return await database.setTaskChecked(task: task);
   }
 
   @override
-  Future<Task> updateTask({required Task task}) {
-    // TODO: implement updateTask
-    throw UnimplementedError();
+  Future<Task> updateTask({required Task task}) async {
+    return await database.updateTask(task: task);
   }
 }

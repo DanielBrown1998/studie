@@ -1,3 +1,4 @@
+import 'package:app/core/error/database.dart';
 import 'package:app/domain/business/dao_tasks_workflow.dart';
 import 'package:app/domain/models/task.dart';
 import 'package:drift/drift.dart';
@@ -74,15 +75,19 @@ class AppDataBase extends _$AppDataBase implements DaoTasksWorkflow {
   }
 
   @override
-  Future<bool> setTaskChecked({required Task task}) {
-    // TODO: implement setTaskChecked
-    throw UnimplementedError();
-  }
+Future<bool> setTaskChecked({required Task task}) async {
+  final updatedRows = await (update(tableTasks)
+    ..where((tbl) => tbl.uid.equals(task.uid!)))
+      .write(TableTasksCompanion(checked: Value(task.checked)));
+  return updatedRows > 0;
+}
 
   @override
-  Future<Task> updateTask({required Task task}) {
-    // TODO: implement updateTask
-    throw UnimplementedError();
+  Future<Task> updateTask({required Task task}) async {
+    await (update(tableTasks)..where(
+      (tbl) => tbl.uid.equals(task.uid!),
+    )).write(_converterTaskInTableTasksCompanion(task));
+    return task;
   }
 
   @override
@@ -98,12 +103,3 @@ class AppDataBase extends _$AppDataBase implements DaoTasksWorkflow {
   }
 }
 
-class TaskNotExistsException implements Exception {
-  final String message;
-  TaskNotExistsException(this.message);
-
-  @override
-  String toString() {
-    return message;
-  }
-}

@@ -73,18 +73,12 @@ class _TasksScreenState extends State<TasksScreen> {
                           ),
                         ),
                         Chip(
-                          label: Text("pressione para marcar como concluido"),
+                          label: Text("aperte para marcar como concluido"),
                           labelStyle: StudieTheme.textTheme.displaySmall,
                         ),
                         Chip(
                           label: Text(
-                            "aperte para ver a descricao",
-                            style: StudieTheme.textTheme.displaySmall,
-                          ),
-                        ),
-                        Chip(
-                          label: Text(
-                            "arraste para a esquerda para deletar",
+                            "pressione para ver a descricao",
                             style: StudieTheme.textTheme.displaySmall,
                           ),
                         ),
@@ -109,15 +103,19 @@ class _TasksScreenState extends State<TasksScreen> {
     ),
   ];
 
-  @override
-  void initState() {
-    super.initState();
+  void initializeDaysAndTaksofDays() {
     weekdayByDateTime = DateTime.now().weekday;
     for (int i = 1; i <= 7; i++) {
       weekday = getWeekdayByNumber(i);
       toDos.add(TasksToDos(weekDays: weekday!, index: i));
     }
     weekday = getWeekdayByNumber(weekdayByDateTime);
+  }
+
+  @override
+  void initState() {
+    initializeDaysAndTaksofDays();
+    super.initState();
   }
 
   deleteDataInCloud() async {
@@ -205,10 +203,6 @@ class _TasksScreenState extends State<TasksScreen> {
       ),
       body: Stack(
         children: [
-          // Container(
-          //   height: double.maxFinite,
-          //   decoration: BoxDecoration(color: StudieTheme.primaryColor),
-          // ),
           SizedBox(
             height: double.maxFinite,
             width: double.maxFinite,
