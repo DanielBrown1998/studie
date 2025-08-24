@@ -83,10 +83,13 @@ Future<bool> setTaskChecked({required Task task}) async {
 }
 
   @override
-  Future<Task> updateTask({required Task task}) async {
-    await (update(tableTasks)..where(
-      (tbl) => tbl.uid.equals(task.uid!),
-    )).write(_converterTaskInTableTasksCompanion(task));
+  Future<Task?> updateTask({required Task task}) async {
+    final updatedRows = await (update(tableTasks)
+      ..where((tbl) => tbl.uid.equals(task.uid!)))
+      .write(_converterTaskInTableTasksCompanion(task));
+    if (updatedRows == 0) {
+      return null;
+    }
     return task;
   }
 

@@ -14,7 +14,6 @@ class TasksToDos extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final theme = Theme.of(context);
     final tasks = Get.find<ControllerTask>(tag: weekDays.nome);
     final size = MediaQuery.sizeOf(context);
     final theme = Theme.of(context);
@@ -26,11 +25,6 @@ class TasksToDos extends StatelessWidget {
         Center(
           child: Icon(Icons.arrow_back_ios_new, color: StudieTheme.whiteSmoke),
         ),
-        // SizedBox(
-        //   height: double.maxFinite,
-        //   width: double.maxFinite,
-        //   child: Image.asset("assets/images/background.jpg"),
-        // ),
         Flexible(
           child: Card(
             shape: OutlineInputBorder(

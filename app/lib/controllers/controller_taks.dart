@@ -39,7 +39,8 @@ class ControllerTask extends GetxController implements DaoTasksWorkflow {
   }
 
   @override
-  Future<Task> updateTask({required Task task}) async {
-    return await database.updateTask(task: task);
+  Future<Task?> updateTask({required Task task}) async {
+    final Task? result = await database.updateTask(task: task);
+    return result;
   }
 }

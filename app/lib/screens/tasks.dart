@@ -1,5 +1,6 @@
 import 'package:app/controllers/controller_taks.dart';
 import 'package:app/domain/models/task.dart';
+import 'package:app/screens/components/create_task.dart';
 import 'package:app/screens/components/default_dialog.dart';
 import 'package:app/core/utils/helpers/days_week.dart';
 import 'package:app/core/theme/theme.dart';
@@ -211,41 +212,45 @@ class _TasksScreenState extends State<TasksScreen> {
               fit: BoxFit.cover,
             ),
           ),
-          Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              (weekday != null)
-                  ? Text(weekday!.nome, style: theme.textTheme.titleMedium)
-                  : Text("Orientacoes", style: theme.textTheme.titleMedium),
-              Center(
-                child: CarouselSlider(
-                  items: toDos,
-                  options: CarouselOptions(
-                    autoPlay: false,
-                    // reverse: true,
-                    viewportFraction: 1,
-                    onPageChanged: (index, reason) {
-                      setState(() {
-                        if (index != 0) {
-                          weekday = getWeekdayByNumber(index);
-                        } else {
-                          weekday = null;
-                        }
-                      });
-                    },
-                    height: size.height * .8,
-                    disableCenter: false,
-                    aspectRatio: 1 / (size.width / size.height),
-                    initialPage: weekdayByDateTime,
-                    scrollDirection: Axis.horizontal,
+          SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                (weekday != null)
+                    ? Text(weekday!.nome, style: theme.textTheme.titleMedium)
+                    : Text("Orientacoes", style: theme.textTheme.titleMedium),
+                Center(
+                  child: CarouselSlider(
+                    items: toDos,
+                    options: CarouselOptions(
+                      autoPlay: false,
+                      // reverse: true,
+                      viewportFraction: 1,
+                      onPageChanged: (index, reason) {
+                        setState(() {
+                          if (index != 0) {
+                            weekday = getWeekdayByNumber(index);
+                          } else {
+                            weekday = null;
+                          }
+                        });
+                      },
+                      height: size.height * .8,
+                      disableCenter: false,
+                      aspectRatio: 1 / (size.width / size.height),
+                      initialPage: weekdayByDateTime,
+                      scrollDirection: Axis.horizontal,
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ],
       ),
+      floatingActionButton:
+          (weekday != null) ? CreateTask(weekday: weekday!.nome).show : null,
     );
   }
 }
