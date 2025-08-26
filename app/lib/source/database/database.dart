@@ -75,18 +75,18 @@ class AppDataBase extends _$AppDataBase implements DaoTasksWorkflow {
   }
 
   @override
-Future<bool> setTaskChecked({required Task task}) async {
-  final updatedRows = await (update(tableTasks)
-    ..where((tbl) => tbl.uid.equals(task.uid!)))
-      .write(TableTasksCompanion(checked: Value(task.checked)));
-  return updatedRows > 0;
-}
+  Future<bool> setTaskChecked({required Task task}) async {
+    final updatedRows = await (update(tableTasks)..where(
+      (tbl) => tbl.uid.equals(task.uid!),
+    )).write(TableTasksCompanion(checked: Value(task.checked)));
+    return updatedRows > 0;
+  }
 
   @override
   Future<Task?> updateTask({required Task task}) async {
-    final updatedRows = await (update(tableTasks)
-      ..where((tbl) => tbl.uid.equals(task.uid!)))
-      .write(_converterTaskInTableTasksCompanion(task));
+    final updatedRows = await (update(tableTasks)..where(
+      (tbl) => tbl.uid.equals(task.uid!),
+    )).write(_converterTaskInTableTasksCompanion(task));
     if (updatedRows == 0) {
       return null;
     }
@@ -105,4 +105,3 @@ Future<bool> setTaskChecked({required Task task}) async {
     );
   }
 }
-

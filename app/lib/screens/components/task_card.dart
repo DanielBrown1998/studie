@@ -201,7 +201,6 @@ class _TaskCardState extends State<TaskCard> {
                               Task? value = await controller.updateTask(
                                 task: task,
                               );
-                              print(value);
                               if (value != null) {
                                 Get.showSnackbar(
                                   GetSnackBarStudie(

@@ -45,6 +45,7 @@ class TasksToDos extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: Obx(() {
                   List<Task> allTasksThisWeekDay = tasks.tasks;
+                  allTasksThisWeekDay.sort((a, b) => a.timeStart.compareTo(b.timeStart));
                   if (allTasksThisWeekDay.isEmpty) {
                     return Column(
                       mainAxisSize: MainAxisSize.max,
