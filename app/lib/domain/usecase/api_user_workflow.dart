@@ -1,4 +1,4 @@
-import 'package:app/domain/models/user.dart';
+import 'package:app/source/models/user.dart';
 
 abstract class ApiUserWorkflow {
   Future<bool> login(User user);

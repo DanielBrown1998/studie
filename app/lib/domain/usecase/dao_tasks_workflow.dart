@@ -1,4 +1,4 @@
-import 'package:app/domain/models/task.dart';
+import 'package:app/source/models/task.dart';
 
 abstract class DaoTasksWorkflow {
   Future<List<Task>> getTasksByWeekDay({required String weekdays});

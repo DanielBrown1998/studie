@@ -1,5 +1,5 @@
-import 'package:app/domain/business/api_user_workflow.dart';
-import 'package:app/domain/models/user.dart';
+import 'package:app/domain/usecase/api_user_workflow.dart';
+import 'package:app/source/models/user.dart';
 import 'package:get/get.dart';
 
 class ControllerUser extends GetxController implements ApiUserWorkflow {

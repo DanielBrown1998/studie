@@ -1,4 +1,4 @@
-import 'package:app/core/theme/theme.dart';
+import 'package:app/ui/core/theme/theme.dart';
 import 'package:get/get.dart';
 
 class DefaultDialog {

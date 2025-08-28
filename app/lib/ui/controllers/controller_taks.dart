@@ -1,5 +1,5 @@
-import 'package:app/domain/business/dao_tasks_workflow.dart';
-import 'package:app/domain/models/task.dart';
+import 'package:app/domain/usecase/dao_tasks_workflow.dart';
+import 'package:app/source/models/task.dart';
 import 'package:get/get.dart';
 import 'package:app/source/database/database.dart' as package_database;
 

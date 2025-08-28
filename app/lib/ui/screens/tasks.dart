@@ -1,11 +1,11 @@
-import 'package:app/controllers/controller_taks.dart';
-import 'package:app/domain/models/task.dart';
-import 'package:app/screens/components/create_task.dart';
-import 'package:app/screens/components/default_dialog.dart';
-import 'package:app/core/utils/helpers/days_week.dart';
-import 'package:app/core/theme/theme.dart';
-import 'package:app/screens/components/task_card.dart';
-import 'package:app/screens/components/tasks_to_dos.dart';
+import 'package:app/ui/controllers/controller_taks.dart';
+import 'package:app/source/models/task.dart';
+import 'package:app/ui/core/components/create_task.dart';
+import 'package:app/ui/core/components/default_dialog.dart';
+import 'package:app/utils/helpers/days_week.dart';
+import 'package:app/ui/core/theme/theme.dart';
+import 'package:app/ui/core/components/task_card.dart';
+import 'package:app/ui/core/components/tasks_to_dos.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 

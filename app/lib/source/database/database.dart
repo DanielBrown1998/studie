@@ -1,6 +1,6 @@
-import 'package:app/core/error/database.dart';
-import 'package:app/domain/business/dao_tasks_workflow.dart';
-import 'package:app/domain/models/task.dart';
+import 'package:app/ui/core/error/database.dart';
+import 'package:app/domain/usecase/dao_tasks_workflow.dart';
+import 'package:app/source/models/task.dart';
 import 'package:drift/drift.dart';
 import 'package:drift_flutter/drift_flutter.dart';
 import 'package:path_provider/path_provider.dart';
