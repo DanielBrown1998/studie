@@ -182,6 +182,7 @@ class FormCreateTaskScreen extends StatelessWidget {
                                     timeStart: int.parse(
                                       hourInitial.value.text,
                                     ),
+                                    timeEnd: int.parse(hourEnd.value.text),
                                     description: description.value.text,
                                     discipline: disciplina.value.text,
                                     daysWeek: weekday,

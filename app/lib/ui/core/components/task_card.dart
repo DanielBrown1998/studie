@@ -43,6 +43,10 @@ class _TaskCardState extends State<TaskCard> {
   @override
   void dispose() {
     widget.width = null;
+    disciplineController.dispose();
+    timeStartController.dispose();
+    descriptionController.dispose();
+    temporaryTask = null;
     super.dispose();
   }
 

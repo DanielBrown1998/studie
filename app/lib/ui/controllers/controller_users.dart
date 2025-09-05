@@ -1,4 +1,4 @@
-import 'package:app/domain/usecase/api_user_workflow.dart';
+import 'package:app/domain/workflow/api_user_workflow.dart';
 import 'package:app/source/models/user.dart';
 import 'package:get/get.dart';
 

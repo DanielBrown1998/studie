@@ -1,5 +1,6 @@
-import 'package:app/domain/usecase/dao_tasks_workflow.dart';
+import 'package:app/domain/workflow/dao_tasks_workflow.dart';
 import 'package:app/source/models/task.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:app/source/database/database.dart' as package_database;
 
@@ -15,17 +16,43 @@ class ControllerTask extends GetxController implements DaoTasksWorkflow {
     this.name.value = name;
   }
 
+  Future<bool> checkIfHasTaskThisHour(Task task) async {
+    List<Task> tasks = await getTasksByWeekDay(weekdays: task.daysWeek);
+    for (Task taskInto in tasks) {
+      if (taskInto.timeStart == task.timeStart) return false;
+    }
+    return true;
+  }
+
   @override
-  Future<int> createTask({required Task task}) {
-    final result = database.createTask(task: task);
-    tasks.add(task);
+  Future<int> createTask({required Task task}) async {
+    int result = 0;
+
+    int countTasks = task.timeEnd - task.timeStart;
+    for (int i = 0; i < countTasks; i++) {
+      Task taskPart = Task(
+        daysWeek: task.daysWeek,
+        description: task.description,
+        discipline: task.discipline,
+        checked: task.checked,
+        timeStart: task.timeStart + i,
+      );
+      debugPrint(taskPart.toString());
+      bool haveTaskThisHour = await checkIfHasTaskThisHour(taskPart);
+      debugPrint("haveTaskThisHour: $haveTaskThisHour");
+      if (haveTaskThisHour) {
+        result += await database.createTask(task: taskPart);
+        debugPrint(result.toString());
+        tasks.add(taskPart);
+      }
+    }
     return result;
   }
 
   @override
-  Future<int> deleteTask({required Task task}) {
+  Future<int> deleteTask({required Task task}) async {
     tasks.remove(task);
-    return database.deleteTask(task: task);
+    return await database.deleteTask(task: task);
   }
 
   @override

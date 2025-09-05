@@ -1,5 +1,5 @@
 import 'package:app/ui/core/error/database.dart';
-import 'package:app/domain/usecase/dao_tasks_workflow.dart';
+import 'package:app/domain/workflow/dao_tasks_workflow.dart';
 import 'package:app/source/models/task.dart';
 import 'package:drift/drift.dart';
 import 'package:drift_flutter/drift_flutter.dart';
