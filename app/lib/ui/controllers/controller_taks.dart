@@ -57,7 +57,10 @@ class ControllerTask extends GetxController implements DaoTasksWorkflow {
 
   @override
   Future<List<Task>> getTasksByWeekDay({required String weekdays}) async {
-    return await database.getTasksByWeekDay(weekdays: weekdays);
+    final result = await database.getTasksByWeekDay(weekdays: weekdays);
+    debugPrint(result.isEmpty.toString());
+    return result;
+    // return await database.getTasksByWeekDay(weekdays: weekdays);
   }
 
   @override

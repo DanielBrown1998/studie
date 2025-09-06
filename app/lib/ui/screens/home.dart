@@ -1,5 +1,6 @@
 import 'package:app/ui/controllers/controller_taks.dart';
-import 'package:app/ui/screens/tasks.dart';
+import 'package:app/ui/screens/tasks/logic/tasks_binding.dart';
+import 'package:app/ui/screens/tasks/page/tasks.dart';
 import 'package:app/ui/core/components/app_bar.dart';
 import 'package:app/ui/core/components/menu_card.dart';
 import 'package:app/source/database/database.dart';
@@ -91,6 +92,7 @@ class _HomePageState extends State<HomePage> {
                         function: () {
                           Get.to(
                             TasksScreen(),
+                            binding: TasksBinding(),
                             curve: Curves.easeInOut,
                             duration: Duration(milliseconds: 500),
                             transition: Transition.downToUp,

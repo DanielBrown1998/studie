@@ -1,4 +1,5 @@
 enum AllWeekDays {
+  initial,
   segundaFeira,
   tercaFeira,
   quartaFeira,
@@ -11,6 +12,8 @@ enum AllWeekDays {
 extension AllWeekDaysExtension on AllWeekDays {
   String get nome {
     switch (this) {
+      case AllWeekDays.initial:
+        return "Orientacoes";
       case AllWeekDays.segundaFeira:
         return "Segunda-feira";
       case AllWeekDays.tercaFeira:

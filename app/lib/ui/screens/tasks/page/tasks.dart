@@ -1,0 +1,195 @@
+// import 'package:app/ui/controllers/controller_taks.dart';
+// import 'package:app/source/models/task.dart';
+import 'package:app/ui/core/components/create_task.dart';
+import 'package:app/ui/core/components/default_dialog.dart';
+import 'package:app/ui/screens/tasks/logic/tasks_logic.dart';
+import 'package:app/utils/helpers/days_week.dart';
+import 'package:app/ui/core/theme/theme.dart';
+// import 'package:app/ui/core/components/task_card.dart';
+// import 'package:app/ui/core/components/tasks_to_dos.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+class TasksScreen extends GetView<TasksLogic> {
+  const TasksScreen({super.key});
+
+  deleteDataInCloud() async {
+    final bool? confirm = await DefaultDialog.dialog(
+      confirmText: "sim",
+      cancelText: "nao",
+      middleText: "deseja apagar os dados da nuvem?",
+      titleText: "Remover Dados",
+    );
+    if (confirm == true) {
+      // TODO implements a function to remove firebase data
+    }
+  }
+
+  syncDataInCloud() async {}
+
+  saveDataInCLoud() async {}
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: StudieTheme.primaryColor,
+        centerTitle: true,
+        foregroundColor: StudieTheme.primaryColor,
+        surfaceTintColor: StudieTheme.primaryColor,
+        elevation: 10,
+        automaticallyImplyLeading: false,
+        leading: null,
+        title: Text("Tarefas", style: theme.textTheme.titleLarge),
+        actions: [
+          PopupMenuButton(
+            onSelected: (value) {
+              switch (value) {
+                case "delete":
+                  deleteDataInCloud();
+                  break;
+                case "save":
+                  saveDataInCLoud();
+                  break;
+                case "sync":
+                  syncDataInCloud();
+                  break;
+              }
+            },
+            icon: Icon(Icons.cloud, color: StudieTheme.whiteSmoke),
+            itemBuilder: (context) {
+              return [
+                PopupMenuItem(
+                  value: "save",
+                  child: ListTile(
+                    leading: Icon(Icons.upload),
+                    title: Text(
+                      "salvar tarefas",
+                      style: theme.textTheme.bodyMedium,
+                    ),
+                  ),
+                ),
+                PopupMenuItem(
+                  value: "sync",
+                  child: ListTile(
+                    leading: Icon(Icons.sync),
+                    title: Text(
+                      "sincronizar tarefas",
+                      style: theme.textTheme.bodyMedium,
+                    ),
+                  ),
+                ),
+                PopupMenuItem(
+                  value: "delete",
+                  child: ListTile(
+                    leading: Icon(Icons.delete),
+                    title: Text(
+                      "deletar tarefas",
+                      style: theme.textTheme.bodyMedium,
+                    ),
+                  ),
+                ),
+              ];
+            },
+          ),
+        ],
+      ),
+      body: Stack(
+        children: [
+          SizedBox(
+            height: double.maxFinite,
+            width: double.maxFinite,
+            child: Image.asset(
+              "assets/images/background.jpg",
+              fit: BoxFit.cover,
+            ),
+          ),
+          controller.obx(
+            onError:
+                (error) => Center(
+                  child: Text(
+                    (error != null) ? error : "Houve um error".tr,
+                    style: StudieTheme.textTheme.bodyLarge,
+                  ),
+                ),
+            onLoading: Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircularProgressIndicator(
+                    backgroundColor: StudieTheme.primaryColor,
+                    color: StudieTheme.whiteSmoke,
+                    padding: EdgeInsets.all(8),
+                    constraints: BoxConstraints(
+                      minHeight: Get.width * 0.05,
+                      minWidth: Get.width * 0.05,
+                      maxHeight: Get.width * 0.1,
+                      maxWidth: Get.width * 0.1,
+                    ),
+                  ),
+                  Text(
+                    "Carregando...".tr,
+                    style: theme.textTheme.titleMedium!.copyWith(
+                      fontStyle: FontStyle.italic,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            (state) => Obx(
+              () => SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      controller.weekday.value!.nome.tr,
+                      style: theme.textTheme.titleLarge!.copyWith(
+                        fontWeight: FontWeight.w700,
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                    Center(
+                      child: CarouselSlider(
+                        items: controller.toDos,
+                        options: CarouselOptions(
+                          autoPlay: false,
+                          // reverse: true,
+                          viewportFraction: 1,
+                          onPageChanged: (index, reason) {
+                            // setState(() {
+                            if (index != 0) {
+                              controller.weekday.value = getWeekdayByNumber(
+                                index,
+                              );
+                            } else {
+                              controller.weekday.value = AllWeekDays.initial;
+                            }
+                            // });
+                          },
+                          height: Get.height * .8,
+                          disableCenter: false,
+                          aspectRatio: 1 / (Get.width / Get.height),
+                          initialPage: controller.weekdayByDateTime.value,
+                          scrollDirection: Axis.horizontal,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+      floatingActionButton:
+          (controller.weekday.value != AllWeekDays.initial)
+              ? CreateTask(weekday: controller.weekday.value!.nome).show
+              : null,
+    );
+  }
+}
