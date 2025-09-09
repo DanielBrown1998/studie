@@ -1,4 +1,4 @@
-import 'package:app/ui/core/components/exemple_widget.dart';
+import 'package:app/ui/core/components/tutorial_widget.dart';
 import 'package:app/ui/core/components/tasks_to_dos.dart';
 import 'package:app/utils/helpers/days_week.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +30,7 @@ class TasksLogic extends GetxController with StateMixin<List<Widget>> {
   void initializeDaysAndTasksofDays() async {
     try {
       change(toDos, status: loading);
-      await Future.delayed(Duration(seconds: 3));
+      await Future.delayed(Duration(milliseconds: 750));
       toDos.add(TutorialWidget());
       for (int i = 1; i <= 7; i++) {
         weekday.value = getWeekdayByNumber(i);

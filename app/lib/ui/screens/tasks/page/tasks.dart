@@ -1,5 +1,6 @@
 // import 'package:app/ui/controllers/controller_taks.dart';
 // import 'package:app/source/models/task.dart';
+import 'package:app/source/models/task.dart';
 import 'package:app/ui/core/components/create_task.dart';
 import 'package:app/ui/core/components/default_dialog.dart';
 import 'package:app/ui/screens/tasks/logic/tasks_logic.dart';
@@ -10,6 +11,7 @@ import 'package:app/ui/core/theme/theme.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 
 class TasksScreen extends GetView<TasksLogic> {
   const TasksScreen({super.key});
@@ -98,14 +100,25 @@ class TasksScreen extends GetView<TasksLogic> {
       ),
       body: Stack(
         children: [
-          SizedBox(
-            height: double.maxFinite,
-            width: double.maxFinite,
-            child: Image.asset(
-              "assets/images/background.jpg",
-              fit: BoxFit.cover,
+          Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  StudieTheme.primaryColor,
+                  StudieTheme.terciaryColor,
+                  StudieTheme.whiteSmoke,
+                ],
+              ),
             ),
           ),
+          // Image.asset(
+          //   "assets/images/background.jpg",
+          //   height: Get.height,
+          //   width: Get.width,
+          //   fit: BoxFit.cover,
+          // ),
           controller.obx(
             onError:
                 (error) => Center(
@@ -120,23 +133,30 @@ class TasksScreen extends GetView<TasksLogic> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  CircularProgressIndicator(
-                    backgroundColor: StudieTheme.primaryColor,
-                    color: StudieTheme.whiteSmoke,
-                    padding: EdgeInsets.all(8),
-                    constraints: BoxConstraints(
-                      minHeight: Get.width * 0.05,
-                      minWidth: Get.width * 0.05,
-                      maxHeight: Get.width * 0.1,
-                      maxWidth: Get.width * 0.1,
-                    ),
+                  Lottie.asset(
+                    "assets/lotties/loading.json",
+                    width: Get.width * .55,
+                    height: Get.width * .55,
+                    filterQuality: FilterQuality.medium,
                   ),
-                  Text(
-                    "Carregando...".tr,
-                    style: theme.textTheme.titleMedium!.copyWith(
-                      fontStyle: FontStyle.italic,
-                    ),
-                  ),
+                  // CircularProgressIndicator(
+                  //   backgroundColor: StudieTheme.primaryColor,
+                  //   color: StudieTheme.whiteSmoke,
+                  //   padding: EdgeInsets.all(8),
+                  //   constraints: BoxConstraints(
+                  //     minHeight: Get.width * 0.05,
+                  //     minWidth: Get.width * 0.05,
+                  //     maxHeight: Get.width * 0.1,
+                  //     maxWidth: Get.width * 0.1,
+                  //   ),
+                  // ),
+
+                  // Text(
+                  //   "Carregando...".tr,
+                  //   style: theme.textTheme.titleMedium!.copyWith(
+                  //     fontStyle: FontStyle.italic,
+                  //   ),
+                  // ),
                 ],
               ),
             ),
@@ -169,6 +189,7 @@ class TasksScreen extends GetView<TasksLogic> {
                             } else {
                               controller.weekday.value = AllWeekDays.initial;
                             }
+                            debugPrint(controller.weekday.value.toString());
                             // });
                           },
                           height: Get.height * .8,
@@ -186,10 +207,40 @@ class TasksScreen extends GetView<TasksLogic> {
           ),
         ],
       ),
-      floatingActionButton:
-          (controller.weekday.value != AllWeekDays.initial)
-              ? CreateTask(weekday: controller.weekday.value!.nome).show
-              : null,
+      floatingActionButton: Obx(
+        () =>
+            (controller.weekday.value != AllWeekDays.initial)
+                ? FloatingActionButton.extended(
+                  heroTag: "create_task",
+                  backgroundColor: Colors.amber,
+                  elevation: 20,
+                  splashColor: Colors.amberAccent,
+                  icon: Icon(
+                    Icons.add_task,
+                    color: StudieTheme.primaryColor,
+                    size: 30,
+                  ),
+                  label: FittedBox(
+                    child: Text(
+                      "Add",
+                      style: StudieTheme.textTheme.bodyMedium!.copyWith(
+                        fontWeight: FontWeight.w600,
+                        fontStyle: FontStyle.italic,
+                        color: StudieTheme.primaryColor,
+                      ),
+                    ),
+                  ),
+                  onPressed: () async {
+                    Task? task = await Get.to(
+                      () => FormCreateTaskScreen(
+                        weekday: controller.weekday.value!.nome,
+                      ),
+                    );
+                    if (task != null) controller.initializeDaysAndTasksofDays();
+                  },
+                )
+                : const SizedBox.shrink(),
+      ),
     );
   }
 }

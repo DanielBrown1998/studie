@@ -2,45 +2,9 @@ import 'package:app/ui/controllers/controller_taks.dart';
 import 'package:app/ui/core/theme/theme.dart';
 import 'package:app/source/models/task.dart';
 import 'package:app/ui/core/components/getsnackbar.dart';
+import 'package:drift/drift.dart' show InvalidDataException;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-//TODO refactor create task
-class CreateTask {
-  final String weekday;
-  CreateTask({required this.weekday});
-
-  FloatingActionButton get show {
-    final controller = Get.find<ControllerTask>(tag: weekday);
-    return FloatingActionButton.small(
-      backgroundColor: Colors.amber,
-      elevation: 20,
-      splashColor: Colors.amberAccent,
-      child: Icon(Icons.add_task, color: StudieTheme.whiteSmoke, size: 30),
-      onPressed: () async {
-        Task? task = await Get.to(() => FormCreateTaskScreen(weekday: weekday));
-        if (task != null) {
-          int value = await controller.createTask(task: task);
-          if (value > 0) {
-            Get.showSnackbar(
-              GetSnackBarStudie(
-                icon: Icons.create,
-                message: "tarefa criada com sucesso!",
-              ).snackbarStudie,
-            );
-          } else {
-            Get.showSnackbar(
-              GetSnackBarStudie(
-                icon: Icons.error,
-                message: "Erro ao criar tarefa!",
-              ).snackbarStudie,
-            );
-          }
-        }
-      },
-    );
-  }
-}
 
 class FormCreateTaskScreen extends StatelessWidget {
   final String weekday;
@@ -51,6 +15,39 @@ class FormCreateTaskScreen extends StatelessWidget {
   final hourInitial = TextEditingController().obs;
   final hourEnd = TextEditingController().obs;
   final description = TextEditingController().obs;
+
+  Future<Task?> createTask(Task task) async {
+    try {
+      final controller = Get.find<ControllerTask>(tag: weekday);
+
+      int value = await controller.createTask(task: task);
+      if (value > 0) {
+        Get.showSnackbar(
+          GetSnackBarStudie(
+            icon: Icons.create,
+            message: "tarefa(s) criada(s) com sucesso!".tr,
+          ).snackbarStudie,
+        );
+        return task;
+      } else {
+        Get.showSnackbar(
+          GetSnackBarStudie(
+            icon: Icons.error,
+            message: "Erro ao criar tarefa!".tr,
+          ).snackbarStudie,
+        );
+      }
+    } on InvalidDataException catch (_) {
+      Get.showSnackbar(
+        GetSnackBarStudie(
+          icon: Icons.error,
+          message: "Erro ao criar tarefa!".tr,
+        ).snackbarStudie,
+      );
+    }
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -91,8 +88,11 @@ class FormCreateTaskScreen extends StatelessWidget {
                           if (value == null || value.trim().isEmpty) {
                             return 'Informe a disciplina';
                           }
-                          if (value.length > 12) {
-                            return 'Menos de 12 caracteres';
+                          if (value.length > 18) {
+                            return 'Mais de 18 caracteres';
+                          }
+                          if (value.length < 3) {
+                            return 'Menos de 3 caracteres';
                           }
                           return null;
                         },
@@ -177,17 +177,15 @@ class FormCreateTaskScreen extends StatelessWidget {
                             onPressed: () {
                               if (localFormKey.currentState != null &&
                                   localFormKey.currentState!.validate()) {
-                                Get.back(
-                                  result: Task(
-                                    timeStart: int.parse(
-                                      hourInitial.value.text,
-                                    ),
-                                    timeEnd: int.parse(hourEnd.value.text),
-                                    description: description.value.text,
-                                    discipline: disciplina.value.text,
-                                    daysWeek: weekday,
-                                  ),
+                                Task? task = Task(
+                                  timeStart: int.parse(hourInitial.value.text),
+                                  timeEnd: int.parse(hourEnd.value.text),
+                                  description: description.value.text,
+                                  discipline: disciplina.value.text,
+                                  daysWeek: weekday,
                                 );
+                                createTask(task);
+                                Get.back(result: task);
                               }
                             },
                             child: Icon(Icons.add_task, color: Colors.green),

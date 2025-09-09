@@ -31,8 +31,8 @@ class $TableTasksTable extends TableTasks
     aliasedName,
     false,
     additionalChecks: GeneratedColumn.checkTextLength(
-      minTextLength: 6,
-      maxTextLength: 12,
+      minTextLength: 3,
+      maxTextLength: 18,
     ),
     type: DriftSqlType.string,
     requiredDuringInsert: true,

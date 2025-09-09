@@ -1,6 +1,5 @@
 import 'package:app/ui/controllers/controller_taks.dart';
-import 'package:app/ui/screens/tasks/logic/tasks_binding.dart';
-import 'package:app/ui/screens/tasks/page/tasks.dart';
+import 'package:app/ui/core/routes/routes.dart';
 import 'package:app/ui/core/components/app_bar.dart';
 import 'package:app/ui/core/components/menu_card.dart';
 import 'package:app/source/database/database.dart';
@@ -67,7 +66,7 @@ class _HomePageState extends State<HomePage> {
               padding: const EdgeInsets.all(16.0),
               child: SizedBox(
                 child: Text(
-                  "Aqui voce pode planejar sua semana com facilidade".tr,
+                  "Aqui voce pode planejar seus estudos com facilidade".tr,
                   style: theme.textTheme.titleMedium,
                   textAlign: TextAlign.center,
                 ),
@@ -90,16 +89,10 @@ class _HomePageState extends State<HomePage> {
                       curve: Curves.easeInCubic,
                       child: MenuCard(
                         function: () {
-                          Get.to(
-                            TasksScreen(),
-                            binding: TasksBinding(),
-                            curve: Curves.easeInOut,
-                            duration: Duration(milliseconds: 500),
-                            transition: Transition.downToUp,
-                          );
+                          goToTaskScreen();
                         },
-                        description: "Tarefas",
-                        icon: Icons.task_alt,
+                        description: "plano semanal".tr,
+                        icon: Icons.play_arrow,
                         duration: 1,
                       ),
                     ),
@@ -109,8 +102,8 @@ class _HomePageState extends State<HomePage> {
                       curve: Curves.easeInCubic,
                       child: MenuCard(
                         function: () {},
-                        description: "Config",
-                        icon: Icons.settings,
+                        description: "Meus Resumos".tr,
+                        icon: Icons.create_new_folder,
                         duration: 1,
                       ),
                     ),
@@ -120,8 +113,9 @@ class _HomePageState extends State<HomePage> {
                       curve: Curves.easeInCubic,
                       child: MenuCard(
                         function: () {},
-                        description: "dicas",
-                        icon: Icons.wb_incandescent_rounded,
+                        description: "A.I".tr,
+                        // icon: Icons.star_rate,
+                        lottieURL: "assets/lotties/star_ai.json",
                         duration: 1,
                       ),
                     ),
@@ -131,19 +125,20 @@ class _HomePageState extends State<HomePage> {
                       curve: Curves.easeInCubic,
                       child: MenuCard(
                         function: () {},
-                        description: "login",
-                        icon: Icons.login,
+                        description: "Tarefas".tr,
+                        icon: Icons.task,
                         duration: 1,
                       ),
                     ),
                     AnimatedOpacity(
                       opacity: _op,
-                      duration: Duration(milliseconds: 1750),
+                      duration: Duration(milliseconds: 1900),
                       curve: Curves.easeInCubic,
                       child: MenuCard(
                         function: () {},
                         description: "Pomodoro",
-                        icon: Icons.apple,
+                        // icon: Icons.apple,
+                        lottieURL: "assets/lotties/countdown.json",
                         duration: 1,
                       ),
                     ),
@@ -156,13 +151,55 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
-      floatingActionButton: FloatingActionButton.extended(
-        elevation: null,
-        isExtended: true,
-        backgroundColor: theme.primaryColor,
-        label: Icon(Icons.help_outline_outlined, color: StudieTheme.whiteSmoke),
-        onPressed: () {},
-        splashColor: theme.primaryColorLight,
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisSize: MainAxisSize.max,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            FloatingActionButton.extended(
+              heroTag: "config_button",
+              elevation: null,
+              isExtended: true,
+              backgroundColor: theme.primaryColor,
+              icon: Icon(Icons.settings, color: StudieTheme.whiteSmoke),
+              label: FittedBox(
+                child: Text("Config".tr, style: theme.textTheme.titleSmall),
+              ),
+              onPressed: () {},
+              splashColor: theme.primaryColorLight,
+            ),
+            FloatingActionButton.extended(
+              heroTag: "login_button",
+              elevation: 10,
+              isExtended: true,
+              label: FittedBox(
+                child: Text("Login".tr, style: theme.textTheme.titleSmall),
+              ),
+              backgroundColor: theme.primaryColor,
+              icon: Icon(Icons.login, color: StudieTheme.whiteSmoke),
+              onPressed: () {},
+              splashColor: theme.primaryColorLight,
+            ),
+            FloatingActionButton.extended(
+              heroTag: "help_button",
+              elevation: null,
+              isExtended: true,
+              backgroundColor: theme.primaryColor,
+              label: FittedBox(
+                child: Text("Ajuda".tr, style: theme.textTheme.titleSmall),
+              ),
+
+              icon: Icon(
+                Icons.help_outline_outlined,
+                color: StudieTheme.whiteSmoke,
+              ),
+              onPressed: () {},
+              splashColor: theme.primaryColorLight,
+            ),
+          ],
+        ),
       ),
     );
   }

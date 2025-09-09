@@ -51,8 +51,9 @@ class _TutorialWidgetState extends State<TutorialWidget> {
                           timeStart: 00,
                           description: "aqui ficara a descricao da sua tarefa",
                           discipline: "titulo",
-                          daysWeek: AllWeekDays.domingo.nome,
+                          daysWeek: AllWeekDays.initial.name,
                         ),
+                        isTutorial: true,
                       ),
                     ),
                     Wrap(
@@ -72,7 +73,7 @@ class _TutorialWidgetState extends State<TutorialWidget> {
                         ),
                         Chip(
                           label: Text(
-                            "pressione para ver a descricao",
+                            "pressione para mais opcoes",
                             style: StudieTheme.textTheme.displaySmall,
                           ),
                         ),

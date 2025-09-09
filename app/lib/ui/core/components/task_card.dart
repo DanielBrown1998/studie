@@ -9,10 +9,17 @@ import 'package:get/get.dart';
 class TaskCard extends StatefulWidget {
   final Task task;
   double? width;
+  bool isTutorial;
   final ControllerTask? controllerTask;
   bool flagShowDescription = false;
   Color borderColorCard = StudieTheme.primaryColor;
-  TaskCard({super.key, required this.task, this.controllerTask, this.width});
+  TaskCard({
+    super.key,
+    required this.task,
+    this.controllerTask,
+    this.width,
+    this.isTutorial = false,
+  });
 
   @override
   State<TaskCard> createState() => _TaskCardState();
@@ -115,7 +122,9 @@ class _TaskCardState extends State<TaskCard> {
             onTap: () async {
               //check is here
               widget.task.checked = !widget.task.checked;
-              await controller!.setTaskChecked(task: widget.task);
+              if (!widget.isTutorial) {
+                await controller!.setTaskChecked(task: widget.task);
+              }
               setState(() {});
             },
             onLongPress: () {
@@ -133,12 +142,16 @@ class _TaskCardState extends State<TaskCard> {
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       SizedBox(
-                        width: size.width * 0.1,
+                        width: size.width * 0.15,
                         child: TextFormField(
                           enabled: isUpdating,
                           decoration: InputDecoration(border: InputBorder.none),
                           keyboardType: TextInputType.number,
-                          controller: timeStartController,
+                          initialValue:
+                              (!isUpdating)
+                                  ? "${timeStartController.text}:00"
+                                  : null,
+                          controller: (isUpdating) ? timeStartController : null,
                           validator: (value) {
                             if (value == null || value.trim().isEmpty) {
                               return 'Informe o horário inicial';
@@ -183,7 +196,9 @@ class _TaskCardState extends State<TaskCard> {
                         )
                       else
                         ElevatedButton.icon(
-                          style: ButtonStyle(),
+                          style: ButtonStyle().copyWith(
+                            elevation: WidgetStatePropertyAll(0),
+                          ),
                           onPressed: () async {
                             //update task here!!!
 

@@ -15,7 +15,7 @@ class TasksToDos extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final tasks = Get.find<ControllerTask>(tag: weekDays.nome);
-    final size = MediaQuery.sizeOf(context);
+    final size = Get.size;
     final theme = Theme.of(context);
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -27,15 +27,7 @@ class TasksToDos extends StatelessWidget {
         ),
         Flexible(
           child: Card(
-            shape: OutlineInputBorder(
-              gapPadding: 4,
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(16),
-                topRight: Radius.circular(16),
-              ),
-              borderSide: BorderSide(color: StudieTheme.primaryColor, width: 2),
-            ),
-            shadowColor: StudieTheme.secondaryColor,
+            shadowColor: StudieTheme.whiteSmoke,
             color: Colors.transparent,
             elevation: 12,
             child: SizedBox(
@@ -45,7 +37,9 @@ class TasksToDos extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: Obx(() {
                   List<Task> allTasksThisWeekDay = tasks.tasks;
-                  allTasksThisWeekDay.sort((a, b) => a.timeStart.compareTo(b.timeStart));
+                  allTasksThisWeekDay.sort(
+                    (a, b) => a.timeStart.compareTo(b.timeStart),
+                  );
                   if (allTasksThisWeekDay.isEmpty) {
                     return Column(
                       mainAxisSize: MainAxisSize.max,
@@ -58,7 +52,7 @@ class TasksToDos extends StatelessWidget {
                           size: 60,
                         ),
                         Text(
-                          "Sem tarefa para esse dia da semana",
+                          "Sem plano para esse dia da semana",
                           textAlign: TextAlign.center,
                           style: theme.textTheme.titleLarge,
                         ),
