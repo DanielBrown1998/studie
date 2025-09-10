@@ -1,4 +1,4 @@
-import 'package:app/ui/controllers/controller_taks.dart';
+import 'package:app/ui/controllers/controller_tasks.dart';
 import 'package:app/ui/core/routes/routes.dart';
 import 'package:app/ui/core/components/app_bar.dart';
 import 'package:app/ui/core/components/menu_card.dart';
@@ -27,7 +27,7 @@ class _HomePageState extends State<HomePage> {
     for (AllWeekDays weekday in AllWeekDays.values) {
       Get.putAsync(() async {
         final controller = ControllerTask(database: database);
-        await controller.initializeController(name: weekday.nome);
+        await controller.initializeController(nome: weekday.nome);
         return controller;
       }, tag: weekday.nome);
     }

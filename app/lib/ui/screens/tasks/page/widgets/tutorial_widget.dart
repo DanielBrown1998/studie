@@ -1,5 +1,5 @@
 import 'package:app/source/models/task.dart';
-import 'package:app/ui/core/components/task_card.dart';
+import 'package:app/ui/screens/tasks/page/widgets/task_card.dart';
 import 'package:app/ui/core/theme/theme.dart';
 import 'package:app/utils/helpers/days_week.dart';
 import 'package:flutter/material.dart';

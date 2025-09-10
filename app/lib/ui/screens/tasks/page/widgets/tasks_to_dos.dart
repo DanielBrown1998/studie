@@ -1,11 +1,11 @@
 import 'package:app/source/models/task.dart';
-import 'package:app/ui/core/components/task_card.dart';
+import 'package:app/ui/screens/tasks/page/widgets/task_card.dart';
 import 'package:app/utils/helpers/days_week.dart';
 import 'package:app/ui/core/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../controllers/controller_taks.dart';
+import '../../../../controllers/controller_tasks.dart';
 
 class TasksToDos extends StatelessWidget {
   final AllWeekDays weekDays;
@@ -52,7 +52,7 @@ class TasksToDos extends StatelessWidget {
                           size: 60,
                         ),
                         Text(
-                          "Sem plano para esse dia da semana",
+                          "Sem plano para esse dia da semana".tr,
                           textAlign: TextAlign.center,
                           style: theme.textTheme.titleLarge,
                         ),

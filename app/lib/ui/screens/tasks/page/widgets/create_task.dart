@@ -1,4 +1,4 @@
-import 'package:app/ui/controllers/controller_taks.dart';
+import 'package:app/ui/controllers/controller_tasks.dart';
 import 'package:app/ui/core/theme/theme.dart';
 import 'package:app/source/models/task.dart';
 import 'package:app/ui/core/components/getsnackbar.dart';

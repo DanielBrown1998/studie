@@ -6,14 +6,14 @@ import 'package:app/source/database/database.dart' as package_database;
 
 class ControllerTask extends GetxController implements DaoTasksWorkflow {
   final package_database.AppDataBase database;
-  RxString name = "".obs;
+  RxString nome = "".obs;
   RxList<Task> tasks = <Task>[].obs;
 
   ControllerTask({required this.database});
 
-  Future<void> initializeController({required String name, required}) async {
-    tasks.value = await getTasksByWeekDay(weekdays: name);
-    this.name.value = name;
+  Future<void> initializeController({required String nome, required}) async {
+    tasks.value = await getTasksByWeekDay(weekdays: nome);
+    this.nome.value = nome;
   }
 
   Future<bool> checkIfHasTaskThisHour(Task task) async {
@@ -37,9 +37,7 @@ class ControllerTask extends GetxController implements DaoTasksWorkflow {
         checked: task.checked,
         timeStart: task.timeStart + i,
       );
-      debugPrint(taskPart.toString());
       bool haveTaskThisHour = await checkIfHasTaskThisHour(taskPart);
-      debugPrint("haveTaskThisHour: $haveTaskThisHour");
       if (haveTaskThisHour) {
         result += await database.createTask(task: taskPart);
         debugPrint(result.toString());
@@ -57,10 +55,7 @@ class ControllerTask extends GetxController implements DaoTasksWorkflow {
 
   @override
   Future<List<Task>> getTasksByWeekDay({required String weekdays}) async {
-    final result = await database.getTasksByWeekDay(weekdays: weekdays);
-    debugPrint(result.isEmpty.toString());
-    return result;
-    // return await database.getTasksByWeekDay(weekdays: weekdays);
+    return await database.getTasksByWeekDay(weekdays: weekdays);
   }
 
   @override

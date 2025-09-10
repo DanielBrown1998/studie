@@ -1,4 +1,4 @@
-import 'package:app/ui/controllers/controller_taks.dart';
+import 'package:app/ui/controllers/controller_tasks.dart';
 import 'package:app/source/models/task.dart';
 import 'package:app/ui/core/theme/theme.dart';
 import 'package:app/ui/core/components/getsnackbar.dart';
@@ -205,7 +205,7 @@ class _TaskCardState extends State<TaskCard> {
                             if (_formKey.currentState!.validate()) {
                               Task task = Task(
                                 timeStart: int.parse(timeStartController.text),
-                                daysWeek: controller!.name.value,
+                                daysWeek: controller!.nome.value,
                                 description: descriptionController.text.trim(),
                                 discipline: disciplineController.text.trim(),
                                 uid: widget.task.uid,

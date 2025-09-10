@@ -1,5 +1,5 @@
-import 'package:app/ui/core/components/tutorial_widget.dart';
-import 'package:app/ui/core/components/tasks_to_dos.dart';
+import 'package:app/ui/screens/tasks/page/widgets/tutorial_widget.dart';
+import 'package:app/ui/screens/tasks/page/widgets/tasks_to_dos.dart';
 import 'package:app/utils/helpers/days_week.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

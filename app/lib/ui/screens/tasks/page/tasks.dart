@@ -1,13 +1,9 @@
-// import 'package:app/ui/controllers/controller_taks.dart';
-// import 'package:app/source/models/task.dart';
 import 'package:app/source/models/task.dart';
-import 'package:app/ui/core/components/create_task.dart';
+import 'package:app/ui/screens/tasks/page/widgets/create_task.dart';
 import 'package:app/ui/core/components/default_dialog.dart';
 import 'package:app/ui/screens/tasks/logic/tasks_logic.dart';
 import 'package:app/utils/helpers/days_week.dart';
 import 'package:app/ui/core/theme/theme.dart';
-// import 'package:app/ui/core/components/task_card.dart';
-// import 'package:app/ui/core/components/tasks_to_dos.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -113,12 +109,6 @@ class TasksScreen extends GetView<TasksLogic> {
               ),
             ),
           ),
-          // Image.asset(
-          //   "assets/images/background.jpg",
-          //   height: Get.height,
-          //   width: Get.width,
-          //   fit: BoxFit.cover,
-          // ),
           controller.obx(
             onError:
                 (error) => Center(
@@ -139,24 +129,6 @@ class TasksScreen extends GetView<TasksLogic> {
                     height: Get.width * .55,
                     filterQuality: FilterQuality.medium,
                   ),
-                  // CircularProgressIndicator(
-                  //   backgroundColor: StudieTheme.primaryColor,
-                  //   color: StudieTheme.whiteSmoke,
-                  //   padding: EdgeInsets.all(8),
-                  //   constraints: BoxConstraints(
-                  //     minHeight: Get.width * 0.05,
-                  //     minWidth: Get.width * 0.05,
-                  //     maxHeight: Get.width * 0.1,
-                  //     maxWidth: Get.width * 0.1,
-                  //   ),
-                  // ),
-
-                  // Text(
-                  //   "Carregando...".tr,
-                  //   style: theme.textTheme.titleMedium!.copyWith(
-                  //     fontStyle: FontStyle.italic,
-                  //   ),
-                  // ),
                 ],
               ),
             ),
