@@ -1,6 +1,5 @@
 import 'package:app/domain/workflow/dao_tasks_workflow.dart';
 import 'package:app/source/models/task.dart';
-import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:app/source/database/database.dart' as package_database;
 
@@ -39,8 +38,9 @@ class ControllerTask extends GetxController implements DaoTasksWorkflow {
       );
       bool haveTaskThisHour = await checkIfHasTaskThisHour(taskPart);
       if (haveTaskThisHour) {
-        result += await database.createTask(task: taskPart);
-        debugPrint(result.toString());
+        await database.createTask(task: taskPart);
+        result++;
+        // debugPrint(result.toString());
         tasks.add(taskPart);
       }
     }
