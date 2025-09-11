@@ -14,7 +14,7 @@ void main() async {
 
   runApp(StudieApp());
 }
-
+//TODO: refactor back to tasks screen in weekday which the user add tasks
 class StudieApp extends StatelessWidget {
   const StudieApp({super.key});
 
@@ -29,7 +29,7 @@ class StudieApp extends StatelessWidget {
       locale: Locale("pt", "BR"),
       defaultTransition: Transition.upToDown,
       onInit: () async {},
-      transitionDuration: Duration(milliseconds: 750),
+      transitionDuration: Duration(milliseconds: 650),
     );
   }
 }

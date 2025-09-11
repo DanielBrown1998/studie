@@ -24,19 +24,21 @@ class TasksLogic extends GetxController with StateMixin<List<Widget>> {
   @override
   void onInit() {
     super.onInit();
-    initializeDaysAndTasksofDays();
+    weekday.value = getWeekdayByNumber(weekdayByDateTime.value);
+    initializeDaysAndTasksofDays(weekday.value!);
   }
 
-  void initializeDaysAndTasksofDays() async {
+  void initializeDaysAndTasksofDays(AllWeekDays weekdayActual) async {
     try {
       change(toDos, status: loading);
       await Future.delayed(Duration(milliseconds: 750));
+      toDos.clear();
       toDos.add(TutorialWidget());
       for (int i = 1; i <= 7; i++) {
         weekday.value = getWeekdayByNumber(i);
         toDos.add(TasksToDos(weekDays: weekday.value!, index: i));
       }
-      weekday.value = getWeekdayByNumber(weekdayByDateTime.value);
+      weekday.value = weekdayActual;
       change(toDos, status: success);
     } on Exception {
       change(toDos, status: error);

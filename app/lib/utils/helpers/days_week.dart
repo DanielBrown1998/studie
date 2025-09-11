@@ -34,6 +34,8 @@ extension AllWeekDaysExtension on AllWeekDays {
 
 AllWeekDays getWeekdayByNumber(int num) {
   switch (num) {
+    case 0:
+      return AllWeekDays.initial;
     case 1:
       return AllWeekDays.segundaFeira;
     case 2:
@@ -50,5 +52,26 @@ AllWeekDays getWeekdayByNumber(int num) {
       return AllWeekDays.domingo;
     default:
       throw ArgumentError('Invalid weekday number: $num');
+  }
+}
+
+int getNumberByWeekDay(AllWeekDays weekday) {
+  switch (weekday) {
+    case AllWeekDays.initial:
+      return 0;
+    case AllWeekDays.segundaFeira:
+      return 1;
+    case AllWeekDays.tercaFeira:
+      return 2;
+    case AllWeekDays.quartaFeira:
+      return 3;
+    case AllWeekDays.quintaFeira:
+      return 4;
+    case AllWeekDays.sextaFeira:
+      return 5;
+    case AllWeekDays.sabado:
+      return 6;
+    case AllWeekDays.domingo:
+      return 7;
   }
 }

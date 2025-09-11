@@ -161,13 +161,16 @@ class TasksScreen extends GetView<TasksLogic> {
                             } else {
                               controller.weekday.value = AllWeekDays.initial;
                             }
+                            debugPrint(index.toString());
                             debugPrint(controller.weekday.value.toString());
                             // });
                           },
                           height: Get.height * .8,
                           disableCenter: false,
                           aspectRatio: 1 / (Get.width / Get.height),
-                          initialPage: controller.weekdayByDateTime.value,
+                          initialPage: getNumberByWeekDay(
+                            controller.weekday.value!,
+                          ),
                           scrollDirection: Axis.horizontal,
                         ),
                       ),
@@ -208,7 +211,11 @@ class TasksScreen extends GetView<TasksLogic> {
                         weekday: controller.weekday.value!.nome,
                       ),
                     );
-                    if (task != null) controller.initializeDaysAndTasksofDays();
+                    if (task != null) {
+                      controller.initializeDaysAndTasksofDays(
+                        controller.weekday.value!,
+                      );
+                    }
                   },
                 )
                 : const SizedBox.shrink(),
