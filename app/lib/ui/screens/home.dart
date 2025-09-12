@@ -113,7 +113,7 @@ class _HomePageState extends State<HomePage> {
                       curve: Curves.easeInCubic,
                       child: MenuCard(
                         function: () {},
-                        description: "A.I".tr,
+                        description: "A.I",
                         // icon: Icons.star_rate,
                         lottieURL: "assets/lotties/star_ai.json",
                         duration: 1,
@@ -135,7 +135,9 @@ class _HomePageState extends State<HomePage> {
                       duration: Duration(milliseconds: 1900),
                       curve: Curves.easeInCubic,
                       child: MenuCard(
-                        function: () {},
+                        function: () {
+                          goToTimerScreen();
+                        },
                         description: "Pomodoro",
                         // icon: Icons.apple,
                         lottieURL: "assets/lotties/countdown.json",

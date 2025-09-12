@@ -1,4 +1,6 @@
 import 'package:app/source/models/task.dart';
+import 'package:app/ui/core/components/error_screen.dart';
+import 'package:app/ui/core/components/load_screen.dart';
 import 'package:app/ui/screens/tasks/page/widgets/create_task.dart';
 import 'package:app/ui/core/components/default_dialog.dart';
 import 'package:app/ui/screens/tasks/logic/tasks_logic.dart';
@@ -7,7 +9,6 @@ import 'package:app/ui/core/theme/theme.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:lottie/lottie.dart';
 
 class TasksScreen extends GetView<TasksLogic> {
   const TasksScreen({super.key});
@@ -110,28 +111,8 @@ class TasksScreen extends GetView<TasksLogic> {
             ),
           ),
           controller.obx(
-            onError:
-                (error) => Center(
-                  child: Text(
-                    (error != null) ? error : "Houve um error".tr,
-                    style: StudieTheme.textTheme.bodyLarge,
-                  ),
-                ),
-            onLoading: Center(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Lottie.asset(
-                    "assets/lotties/loading.json",
-                    width: Get.width * .55,
-                    height: Get.width * .55,
-                    filterQuality: FilterQuality.medium,
-                  ),
-                ],
-              ),
-            ),
+            onError: (error) => ErrorScreen(error: error),
+            onLoading: LoadScreen(),
             (state) => Obx(
               () => SingleChildScrollView(
                 child: Column(

@@ -1,5 +1,7 @@
 import 'package:app/ui/screens/tasks/logic/tasks_binding.dart';
 import 'package:app/ui/screens/tasks/page/tasks.dart';
+import 'package:app/ui/screens/timer/logic/timer_binding.dart';
+import 'package:app/ui/screens/timer/page/timer.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -13,6 +15,14 @@ goToTaskScreen() => Get.to(
 goOffAllTaskScreen() => Get.offAll(
   TasksScreen(),
   binding: TasksBinding(),
+  curve: Curves.easeInOut,
+  duration: Duration(milliseconds: 500),
+  transition: Transition.downToUp,
+);
+
+goToTimerScreen() => Get.to(
+  TimerScreen(),
+  binding: TimerBinding(),
   curve: Curves.easeInOut,
   duration: Duration(milliseconds: 500),
   transition: Transition.downToUp,
