@@ -6,6 +6,7 @@ class TimerLogic extends GetxController with StateMixin<Duration> {
   Rx<Duration> time = Duration.zero.obs;
   Timer timer = Timer(Duration.zero, () {});
   RxBool isPlaying = false.obs;
+  final int timeLimit = 25;
 
   RxStatus success = RxStatus.success();
   RxStatus loading = RxStatus.loading();
@@ -29,7 +30,7 @@ class TimerLogic extends GetxController with StateMixin<Duration> {
     isPlaying.value = true;
     timer = Timer.periodic(Duration(seconds: 1), (timer) {
       time.value += Duration(seconds: 1);
-      if (time.value >= Duration(minutes: 1)) {
+      if (time.value >= Duration(minutes: timeLimit)) {
         cancelTimer();
         change(Duration.zero, status: empty);
         //TODO emitir alarme;
@@ -41,16 +42,14 @@ class TimerLogic extends GetxController with StateMixin<Duration> {
   pauseTimer() {
     if (isPlaying.value) {
       timer.cancel();
-      isPlaying.value = !isPlaying.value;
+      isPlaying.value = false;
     }
   }
 
   cancelTimer() {
-    if (isPlaying.value) {
-      timer.cancel();
-      time.value = Duration.zero;
-      isPlaying.value = !isPlaying.value;
-    }
+    timer.cancel();
+    time.value = Duration.zero;
+    isPlaying.value = false;
   }
 
   @override

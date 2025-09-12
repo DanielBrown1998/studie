@@ -92,7 +92,7 @@ class TimerScreen extends GetView<TimerLogic> {
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           Text(
-                            "${controller.time.value.inMinutes}:${controller.time.value.inSeconds % 60}",
+                            "${controller.time.value.inMinutes.toString().padLeft(2, "0")}:${(controller.time.value.inSeconds % 60).toString().padLeft(2, "0")}",
                             style: StudieTheme.textTheme.titleLarge!.copyWith(
                               fontSize: Get.height * .1,
                             ),
@@ -103,30 +103,68 @@ class TimerScreen extends GetView<TimerLogic> {
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               (!controller.isPlaying.value)
-                                  ? IconButton(
-                                    icon: Icon(
-                                      Icons.start,
-                                      size: Get.height * .04,
+                                  ? InkWell(
+                                    splashColor: StudieTheme.primaryColor,
+
+                                    child: Chip(
+                                      backgroundColor:
+                                          StudieTheme.secondaryColor,
+                                      elevation: 10,
+                                      label: Text(
+                                        "Iniciar".tr,
+                                        style: StudieTheme.textTheme.bodyMedium,
+                                      ),
+                                      avatar: Center(
+                                        child: Icon(
+                                          Icons.play_arrow_outlined,
+                                          size: Get.height * .04,
+                                        ),
+                                      ),
                                     ),
-                                    onPressed: () {
+                                    onTap: () {
                                       controller.startTimer();
                                     },
                                   )
-                                  : IconButton(
-                                    icon: Icon(
-                                      Icons.pause,
-                                      size: Get.height * .04,
+                                  : InkWell(
+                                    splashColor: StudieTheme.secondaryColor,
+
+                                    child: Chip(
+                                      backgroundColor:
+                                          StudieTheme.terciaryColor,
+                                      elevation: 10,
+                                      label: Text(
+                                        "Pausar".tr,
+                                        style: StudieTheme.textTheme.bodyMedium,
+                                      ),
+                                      avatar: Center(
+                                        child: Icon(
+                                          Icons.pause,
+                                          size: Get.height * .04,
+                                        ),
+                                      ),
                                     ),
-                                    onPressed: () {
+                                    onTap: () {
                                       controller.pauseTimer();
                                     },
                                   ),
-                              IconButton(
-                                icon: Icon(
-                                  Icons.cancel,
-                                  size: Get.height * .04,
+                              InkWell(
+                                splashColor: StudieTheme.secondaryColor,
+
+                                child: Chip(
+                                  backgroundColor: StudieTheme.terciaryColor,
+                                  elevation: 10,
+                                  label: Text(
+                                    "Cancelar".tr,
+                                    style: StudieTheme.textTheme.bodyMedium,
+                                  ),
+                                  avatar: Center(
+                                    child: Icon(
+                                      Icons.cancel_outlined,
+                                      size: Get.height * .04,
+                                    ),
+                                  ),
                                 ),
-                                onPressed: () {
+                                onTap: () {
                                   controller.cancelTimer();
                                 },
                               ),
