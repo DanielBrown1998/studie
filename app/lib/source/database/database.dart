@@ -55,6 +55,7 @@ class AppDataBase extends _$AppDataBase implements DaoTasksWorkflow {
   }
 
   @override
+  // SQL -> INSERT INTO table_tasks (discipline, description, daysWeek, timeStart, timeEnd, checked) VALUES (?, ?, ?, ?, ?, ?);
   Future<int> createTask({required Task task}) async {
     return await into(
       tableTasks,
@@ -62,11 +63,13 @@ class AppDataBase extends _$AppDataBase implements DaoTasksWorkflow {
   }
 
   @override
+  // SQL -> DELETE FROM table_tasks WHERE uid = ?;
   Future<int> deleteTask({required Task task}) async {
     return await delete(tableTasks).delete(_converterTaskInTableTasks(task));
   }
 
   @override
+  // SQL -> SELECT * FROM table_tasks WHERE daysWeek LIKE '%weekdays%';
   Future<List<Task>> getTasksByWeekDay({required String weekdays}) async {
     final query = select(tableTasks)
       ..where((tbl) => tbl.daysWeek.like('%$weekdays%'));
@@ -75,6 +78,7 @@ class AppDataBase extends _$AppDataBase implements DaoTasksWorkflow {
   }
 
   @override
+  // SQL -> UPDATE table_tasks SET checked = ? WHERE uid = ?;
   Future<bool> setTaskChecked({required Task task}) async {
     final updatedRows = await (update(tableTasks)..where(
       (tbl) => tbl.uid.equals(task.uid!),
@@ -83,6 +87,7 @@ class AppDataBase extends _$AppDataBase implements DaoTasksWorkflow {
   }
 
   @override
+  // SQL -> UPDATE table_tasks SET discipline = ?, description = ?, daysWeek = ?, timeStart = ?, timeEnd = ? WHERE uid = ?;
   Future<Task?> updateTask({required Task task}) async {
     final updatedRows = await (update(tableTasks)..where(
       (tbl) => tbl.uid.equals(task.uid!),

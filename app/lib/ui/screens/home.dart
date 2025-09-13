@@ -1,3 +1,4 @@
+import 'package:app/source/service/firebase/ai_service.dart';
 import 'package:app/ui/controllers/controller_tasks.dart';
 import 'package:app/ui/core/routes/routes.dart';
 import 'package:app/ui/core/components/app_bar.dart';
@@ -12,6 +13,7 @@ import 'package:get/get.dart';
 class HomePage extends StatefulWidget {
   HomePage({super.key});
   final DatabaseInstance databaseInstance = DatabaseInstance();
+  final AIService aiService = AIService();
   @override
   State<HomePage> createState() => _HomePageState();
 }
@@ -112,7 +114,13 @@ class _HomePageState extends State<HomePage> {
                       duration: Duration(milliseconds: 1500),
                       curve: Curves.easeInCubic,
                       child: MenuCard(
-                        function: () {},
+                        function: () async{
+                          final studyPlan =
+                              await widget.aiService.generateStudyPlan();
+                          if (studyPlan != null) {
+                            print(studyPlan);
+                          }
+                        },
                         description: "A.I",
                         // icon: Icons.star_rate,
                         lottieURL: "assets/lotties/star_ai.json",
