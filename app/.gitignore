@@ -15,8 +15,8 @@ build/
 .vscode/
 
 # Sensitive files
-lib/firebase_options.dart
+app/lib/firebase_options.dart
 
 # Generated files
-lib/source/database/database.g.dart
-test/ui/controllers/controller_tasks_test.mocks.dart
+*.g.dart
+*.mocks.dart

@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "109732420761-teij65r605as0bljs53oco0jd27dka20.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.studie.app",
+            "certificate_hash": "328e5e66fb98671219490884749fa71d37e771d3"
+          }
+        },
+        {
           "client_id": "109732420761-n3o5oebf60i3620q0p1i3aohdc416ktt.apps.googleusercontent.com",
           "client_type": 3
         }

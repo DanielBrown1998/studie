@@ -1,4 +1,7 @@
+import 'package:app/source/service/firebase/crash_lytics.dart';
 import 'package:firebase_ai/firebase_ai.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter/foundation.dart';
 
 class AIService {
   // Define o schema para uma única tarefa.
@@ -63,7 +66,11 @@ class AIService {
       return response.text;
     } catch (e) {
       // Idealmente, usar um serviço de logging como Crashlytics aqui.
-      print('Erro ao gerar plano de estudos: $e');
+      FirebaseCrashlytics crashlytics = CrashLytics().firebaseCrashlytics;
+      String message = 'Erro ao gerar plano de estudos: $e';
+      crashlytics.log(message);
+      crashlytics.recordError(e, StackTrace.current);
+      debugPrint(message);
       return null;
     }
   }
