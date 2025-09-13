@@ -5,9 +5,9 @@ class CrashLytics {
   //initialize Firebase Crashlytics
   FirebaseCrashlytics get firebaseCrashlytics => FirebaseCrashlytics.instance;
 
-  initializeCrashLytics() {
-    FlutterError.onError = (errorDetails) {
-      firebaseCrashlytics.recordFlutterFatalError(errorDetails);
+  initialize() {
+    FlutterError.onError = (errorDetails) async {
+      await firebaseCrashlytics.recordFlutterFatalError(errorDetails);
     };
     PlatformDispatcher.instance.onError = (error, stack) {
       firebaseCrashlytics.recordError(error, stack, fatal: true);

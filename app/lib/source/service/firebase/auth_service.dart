@@ -1,7 +1,7 @@
 import 'package:app/domain/workflow/api_user_workflow.dart';
 import 'package:app/source/models/user.dart';
 
-class UserService implements ApiUserWorkflow {
+class AuthService implements ApiUserWorkflow {
   @override
   Future<bool> deleteDataInCLoud() {
     // TODO: implement deleteDataInCLoud

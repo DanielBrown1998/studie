@@ -15,8 +15,8 @@ void main() async {
 
   //initializing firebase
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  AppCheck().initializeAppCheck();
-  CrashLytics().initializeCrashLytics();
+  await AppCheck().initialize();
+  CrashLytics().initialize();
 
   runApp(StudieApp());
 }
